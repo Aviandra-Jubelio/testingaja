@@ -1,0 +1,18 @@
+type: object
+required:
+  - ref_no
+  - voucher_code
+properties:
+  ref_no:
+    type: string
+    description: 'Order number, which is using the voucher code.'
+    example: SP-3728497329
+  voucher_code:
+    type: array
+    items:
+      type: string
+      description: >-
+        Voucher code that needs to be redeemed. One order/transaction number can
+        be used more than once.
+      example:
+        - JUBELIOJUNICERIA401001

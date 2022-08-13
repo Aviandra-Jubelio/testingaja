@@ -1,0 +1,12 @@
+type: array
+items:
+  type: object
+  properties:
+    id:
+      type: string
+      description: ID
+      example: Kesalahan biaya
+    text:
+      type: string
+      description: Dispute Invoice Reason
+      example: Kesalahan biaya

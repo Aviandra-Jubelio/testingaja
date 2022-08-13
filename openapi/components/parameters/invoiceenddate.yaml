@@ -1,0 +1,8 @@
+name: end_date
+in: query
+required: false
+style: form
+description: 'Invoice created, end date. Unix time format'
+schema:
+  type: string
+  example: 16554268

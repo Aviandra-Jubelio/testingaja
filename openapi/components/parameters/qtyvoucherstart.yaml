@@ -1,0 +1,8 @@
+name: qty_voucher_start
+in: query
+required: false
+style: form
+description: Minimum voucher quantity
+schema:
+  type: number
+  example: 10

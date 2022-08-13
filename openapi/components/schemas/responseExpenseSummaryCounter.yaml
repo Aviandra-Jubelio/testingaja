@@ -1,0 +1,21 @@
+type: object
+properties:
+  period:
+    type: string
+    description: Voucher Summary Period
+    example: Juni 2022
+  data:
+    type: object
+    properties:
+      expense:
+        type: number
+        description: Total shipment cost in the running month
+        example: 8000000
+      cashback:
+        type: number
+        description: 15% of total shipment cost (expense)
+        example: 1200000
+      total:
+        type: number
+        description: Expense minus cashback
+        example: 6800000

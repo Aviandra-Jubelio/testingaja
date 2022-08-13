@@ -1,0 +1,14 @@
+type: object
+properties:
+  statusCode:
+    type: string
+    description: Error Status Code
+    example: 404
+  error:
+    type: string
+    description: Dispute Invoice Failed
+    example: Internal Server Error
+  message:
+    type: string
+    description: Error Message
+    example: Mandatory Field is missing

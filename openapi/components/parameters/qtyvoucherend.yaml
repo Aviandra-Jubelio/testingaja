@@ -1,0 +1,8 @@
+name: qty_voucher_end
+in: query
+required: false
+style: form
+description: Maximum voucher quantity
+schema:
+  type: number
+  example: 100

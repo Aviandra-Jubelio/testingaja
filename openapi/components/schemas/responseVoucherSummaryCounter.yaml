@@ -1,0 +1,37 @@
+type: object
+properties:
+  period:
+    type: string
+    description: Voucher Summary Period
+    example: Juni 2022
+  data:
+    type: object
+    properties:
+      total:
+        type: number
+        description: >-
+          Cashback amount for seller to generate the vouchers. Obtained from 7%
+          of shipment cost.
+        example: 100000
+      remaining_balance:
+        type: number
+        description: Remaining balance that can be use to create the voucher.
+        example: 50000
+      voucher_total_amount:
+        type: number
+        description: The balance that has has been used for making vouchers
+        example: 50000
+      remaining_voucher:
+        type: number
+        description: Remaining quantity of the voucher
+        example: 5
+      current_shipment:
+        type: number
+        description: Number of shipments that have been done
+        example: 40
+      shipment_required:
+        type: number
+        description: >-
+          Number of shipments that must be achieved to get the cashback (100
+          shipments).
+        example: 100

@@ -1,0 +1,27 @@
+type: object
+properties:
+  shipment_log_id:
+    type: number
+    description: Shipment Log ID
+    example: 2
+  shipment_id:
+    type: number
+    description: Shipment ID
+    example: 4
+  date:
+    type: string
+    format: date-time
+    description: Date based on shipment status
+    example: 2022-06-21T08:00:00.000Z
+  status:
+    type: string
+    description: Shipment Status
+    example: Dikonfirmasi
+  status_detail:
+    type: string
+    description: Status Detail
+    example: Paket Telah Dikonfirmasi Kurir
+  extra_info:
+    type: string
+    description: Note/Information from logistics
+    example: null

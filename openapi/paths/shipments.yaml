@@ -1,0 +1,54 @@
+get:
+  tags:
+    - Shipments
+  summary: Get a list of generated AWB
+  description: >-
+    Get information about the list of shipments that are already in progress or
+    completed. <br> List of tracking statuses you can search= 1. ALL 2. WAITING
+    3. PROCESSED 4. CONFIRMED_BY_COURIER 5. ON_THE_WAY_PICK_UP 6. PICKED_UP 7.
+    ON_DELIVERY 8. ON_HOLD 9. DONE 10. DELIVERED 11. RETURNED 12. CANCELED 13.
+    DECLINED 14. SHIPMENT_ISSUE
+  operationId: ListGeneratedAWB
+  parameters:
+    - $ref: ../components/parameters/authorization.yaml
+    - $ref: ../components/parameters/page.yaml
+    - $ref: ../components/parameters/pagesize.yaml
+    - $ref: ../components/parameters/courierservice.yaml
+    - $ref: ../components/parameters/couriermethod.yaml
+    - $ref: ../components/parameters/sortdirection.yaml
+    - name: sort_by
+      in: query
+      required: false
+      style: form
+      explode: true
+      description: |
+        sort by all column:
+          - ref_no
+          - awb_code
+          - courier_name
+          - courier_service_name
+          - shipment_status
+          - shipment_date
+      schema:
+        type: string
+    - name: q
+      in: query
+      required: false
+      style: form
+      explode: true
+      description: Filter Query by Reference Number (ref_no)
+      schema:
+        type: string
+  responses:
+    "200":
+      description: Successful
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/ListGeneratedAWB.yaml
+    "500":
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/internalServerError.yaml

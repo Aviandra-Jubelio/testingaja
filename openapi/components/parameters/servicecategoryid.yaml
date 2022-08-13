@@ -1,0 +1,9 @@
+name: service_category_id
+in: query
+required: true
+style: form
+explode: true
+description: Service Category ID
+schema:
+  type: string
+  example: 5

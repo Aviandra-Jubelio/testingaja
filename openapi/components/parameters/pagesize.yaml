@@ -1,0 +1,10 @@
+name: page_size
+in: query
+required: true
+style: form
+explode: true
+description: Page Size.
+schema:
+  minimum: 1
+  type: number
+  format: int32

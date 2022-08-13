@@ -1,0 +1,17 @@
+type: object
+properties:
+  statusCode:
+    type: string
+    description: Error code
+    example: 404
+  error:
+    type: string
+    description: Error type
+    example: Generate Voucher Error
+  message:
+    type: string
+    description: >-
+      Error message. There are 3 types of messages= 'mandatory field is
+      missing', 'voucher amount is exceeded the cashback', 'voucher code is
+      already used'.
+    example: Mandatory field is missing

@@ -1,0 +1,132 @@
+type: object
+properties:
+  company_id:
+    type: string
+    description: Company ID
+    example: 20
+  company_name:
+    type: string
+    description: Company Name / Store Name
+    example: Toko Ajung
+  npwp:
+    type: string
+    description: NPWP
+    example: 10242402039405
+  website:
+    type: string
+    description: Website
+    example: ''
+  address:
+    type: string
+    description: Store Address
+    example: Jl. Wahyu Raya no 889
+  city:
+    type: string
+    description: City
+    example: Jakarta Selatan
+  state:
+    type: string
+    description: State
+    example: DKI Jakarta
+  postcode:
+    type: string
+    description: Postcode
+    example: 12420
+  country:
+    type: string
+    description: Country
+    example: Indonesia
+  coordinate:
+    type: string
+    description: Coordinate
+    example: '(-6.212911,106.82146)'
+  contact_person:
+    type: string
+    description: Contact Person
+    example: Krystal Jung
+  phone1:
+    type: string
+    description: Store Phone Number
+    example: 0877777777
+  phone2:
+    type: string
+    description: Store Phone Number
+    example: 08888888888
+  email:
+    type: string
+    description: Email
+    example: krystaljung@yopmail.com
+  fax:
+    type: string
+    description: Fax
+    example: ''
+  referral:
+    type: string
+    description: Referral. The default value is Jubelio.
+    example: Jubelio
+  locations:
+    type: array
+    description: Array of Objects. List of warehouse locations.
+    items:
+      type: object
+      properties:
+        location_code:
+          type: string
+          description: Warehouse Location Code
+          example: 1
+        location_name:
+          type: string
+          description: Warehouse Location Name
+          example: Gudang Pusat
+        address:
+          type: string
+          description: Warehouse Address
+          example: Jl. Wahyu Raya No. 893829
+        city:
+          type: string
+          description: City
+          example: Jakarta Selatan
+        phone:
+          type: string
+          description: phone
+          example: 0819222222222
+        email:
+          type: string
+          description: Warehouse Email
+          example: testing@gmail.com
+        province:
+          type: string
+          description: Province
+          example: DKI Jakarta
+        zipcode:
+          type: string
+          description: Zipcode
+          example: 12420
+        area:
+          type: string
+          description: Area
+          example: Cilandak
+        subdistrict:
+          type: string
+          description: Subdistrict
+          example: Gandaria Selatan
+        coordinate:
+          type: string
+          description: Coordinate
+          example: Coordinate
+        province_id:
+          type: string
+          description: Province ID
+          example: 123
+        city_id:
+          type: string
+          description: City ID
+          example: 12
+        district_id:
+          type: string
+          description: District ID
+          example: 1233
+        subdistrict_id:
+          type: string
+          description: District ID
+          example: 12324

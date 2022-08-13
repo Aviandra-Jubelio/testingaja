@@ -1,0 +1,10 @@
+type: object
+properties:
+  client_id:
+    type: string
+    description: Client ID
+    example: 321432143dsafdsa
+  client_secret:
+    type: string
+    description: Client Secret
+    example: 23vjdsivnjsiv

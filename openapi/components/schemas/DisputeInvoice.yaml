@@ -1,0 +1,41 @@
+type: object
+required:
+  - invoice_id
+  - invoice_dispute_reason
+  - dispute_shipments
+properties:
+  invoice_id:
+    type: string
+    description: Invoice ID
+    example: 1
+  invoice_dispute_reason:
+    type: string
+    description: >-
+      Invoice Dispute Reason. Obtain the value from **Get Dispute Invoice
+      Reason** endpoint.
+    example: Kesalahan biaya
+  dispute_shipments:
+    type: array
+    items:
+      type: object
+      required:
+        - invoice_detail_id
+        - invoice_dispute_shipment_reason
+        - correct_amount
+      properties:
+        invoice_detail_id:
+          type: string
+          description: >-
+            Invoice Detail ID. Obtain the value from **Get Detail Invoice**
+            endpoint.
+          example: 1
+        invoice_dispute_shipment_reason:
+          type: string
+          description: >-
+            Invoice Dispute Shipment Reason. Obtain the value from **Get Dispute
+            Invoice Detail Reason** endpoint.
+          example: Salah Harga
+        correct_amount:
+          type: number
+          description: Correct shipping price
+          example: 15000

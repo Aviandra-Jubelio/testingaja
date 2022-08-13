@@ -1,0 +1,31 @@
+type: object
+properties:
+  status:
+    type: string
+    description: Download Status
+    example: OK
+  url:
+    type: string
+    description: URL to download invoice
+    example: 'https://report-shipment.jubelio.com/?token=48327583492758943'
+  invoice_name:
+    type: string
+    description: Invoice Name
+    example: INVJAN2021
+  timezone:
+    type: string
+    description: Download location
+    example: Asia/Jakarta
+  timezone_offset:
+    type: string
+    description: Timezone Offset
+    example: +07.00
+  downloaded_time:
+    type: string
+    description: Downloaded Time
+    example: 2020-03-04T00:00:00.000Z
+  file_type:
+    type: string
+    format: binary
+    description: File type
+    example: INVJAN2022.pdf

@@ -1,0 +1,14 @@
+name: invoice_status
+in: query
+required: false
+style: form
+description: |
+  Invoice status are:
+    - 0 = Unreconcile
+    - 1 = Unpaid
+    - 2 = Paid
+    - 3 = Void
+    - 4 = Dispute
+schema:
+  type: string
+  example: 2

@@ -1,0 +1,165 @@
+type: object
+properties:
+  courier_id:
+    type: string
+    description: Courier ID
+    example: 17
+  courier_service_id:
+    type: string
+    description: Courier Service ID
+    example: 1728
+  payment_method:
+    type: string
+    description: Payment Method
+    example: null
+  is_insurance:
+    type: boolean
+    description: Whether or not package is include the insurance.
+    example: false
+  origin:
+    type: object
+    properties:
+      name:
+        type: string
+        description: Shipper Name
+        example: Lalisa Manoban
+      phone:
+        type: string
+        description: Shipper Phone Number
+        example: 081273821947
+      email:
+        type: string
+        description: Shipper Email
+        example: indra@blackpink.com
+      address:
+        type: string
+        description: Shipper Address
+        example: Jl. Wahyu Raya No. 888
+      province_id:
+        type: string
+        description: Province ID
+        example: 32
+      city_id:
+        type: string
+        description: City ID
+        example: 3275
+      district_id:
+        type: string
+        description: District ID
+        example: 327509
+      country:
+        type: string
+        description: Shipper Country
+        example: Indonesia
+      area_id:
+        type: string
+        description: Area ID
+        example: 12
+      zipcode:
+        type: string
+        description: Shipper Zipcode
+        example: 17425
+      coordinate:
+        type: string
+        description: Shipper Coordinate Location
+        example: '(-6.310273,106.8848316)'
+      note:
+        type: string
+        description: Note
+        example: ''
+  destination:
+    type: object
+    properties:
+      name:
+        type: string
+        description: Consignee Name
+        example: Lalisa Manoban
+      phone:
+        type: string
+        description: Consignee Phone Number
+        example: 081273821947
+      email:
+        type: string
+        description: Consignee Email
+        example: indra@blackpink.com
+      address:
+        type: string
+        description: Consignee Address
+        example: Jl. Wahyu Raya No. 888
+      province_id:
+        type: string
+        description: Province ID
+        example: 32
+      city_id:
+        type: string
+        description: City ID
+        example: 3275
+      district_id:
+        type: string
+        description: District ID
+        example: 327509
+      country:
+        type: string
+        description: Consignee Country
+        example: Indonesia
+      area_id:
+        type: string
+        description: Area ID
+        example: 12
+      zipcode:
+        type: string
+        description: Consignee Zipcode
+        example: 17425
+      coordinate:
+        type: string
+        description: Consignee Coordinate Location
+        example: '(-6.310273,106.8848316)'
+      note:
+        type: string
+        description: Note
+        example: ''
+  items:
+    type: array
+    items:
+      type: object
+      properties:
+        item_name:
+          type: string
+          description: Item Name
+          example: Buku
+        category:
+          type: string
+          description: Item Category
+          example: Buku
+        quantity:
+          type: number
+          description: Item Quantity
+          example: 1
+        value:
+          type: number
+          description: Item Value
+          example: 10000
+        weight:
+          type: number
+          description: Weight in gram
+          example: 1000
+        length:
+          type: number
+          description: Package Length
+          example: 10
+        height:
+          type: number
+          description: Package Height
+          example: 10
+        width:
+          type: number
+          description: Package width
+          example: 10
+        depth:
+          type: number
+          description: Package depth
+          example: 10
+        is_fragile:
+          type: boolean
+          description: Whether or not the item is fragile.
+          example: false

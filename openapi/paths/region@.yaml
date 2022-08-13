@@ -1,0 +1,35 @@
+get:
+  tags:
+    - Region
+  summary: Get Region by Zipcode
+  description: Get region information by zip code
+  operationId: GetRegionbyZipcode
+  parameters:
+    - $ref: ../components/parameters/authorization.yaml
+    - name: zipcode
+      in: query
+      required: true
+      schema:
+        type: string
+        description: Zip code to find the location.
+        example: 12920
+    - name: area_id
+      in: query
+      required: false
+      schema:
+        type: string
+        description: Area ID to find the more specific location.
+        example: 12920483275
+  responses:
+    "200":
+      description: Successful
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/GetRegionbyZipcode.yaml
+    "500":
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/internalServerError.yaml

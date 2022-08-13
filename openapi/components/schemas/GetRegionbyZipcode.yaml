@@ -1,0 +1,39 @@
+type: object
+properties:
+  data:
+    type: array
+    items:
+      type: object
+      properties:
+        province:
+          type: string
+          description: Province Name
+          example: Jawa Tengah
+        province_id:
+          type: string
+          description: Province ID
+          example: 33
+        city:
+          type: string
+          description: City Name
+          example: KAB. PURWOREJO
+        city_id:
+          type: string
+          description: City ID
+          example: 3306
+        district_id:
+          type: string
+          description: District ID
+          example: 330610
+        district:
+          type: string
+          description: District Name
+          example: Butuh
+        area:
+          type: string
+          description: Area Name
+          example: Kedungmulyo
+        area_id:
+          type: string
+          description: Area ID
+          example: 3306102001

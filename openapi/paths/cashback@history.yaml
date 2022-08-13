@@ -1,0 +1,48 @@
+get:
+  tags:
+    - Cashback
+  summary: Get Cashback History
+  description: >-
+    You can use this endpoint to get information about the use of your voucher
+    balance.
+  operationId: getCashbackHistory
+  parameters:
+    - $ref: ../components/parameters/page.yaml
+    - $ref: ../components/parameters/pagesize.yaml
+    - $ref: ../components/parameters/cashbackstartdate.yaml
+    - $ref: ../components/parameters/cashbackenddate.yaml
+    - $ref: ../components/parameters/sortdirection.yaml
+    - name: sort_by
+      in: query
+      required: false
+      style: form
+      explode: true
+      description: |
+        Sort by all column:
+        - ref_no
+        - cashback_type
+        - cashback_date
+        - cashback_amount
+      schema:
+        type: string
+    - name: q
+      in: query
+      required: false
+      style: form
+      explode: true
+      description: Filter query by ref_no
+      schema:
+        type: string
+  responses:
+    "200":
+      description: Successful
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/ResponseCashbackHistory.yaml
+    "500":
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/internalServerError.yaml

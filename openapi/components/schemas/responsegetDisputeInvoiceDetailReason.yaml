@@ -1,0 +1,12 @@
+type: array
+items:
+  type: object
+  properties:
+    id:
+      type: string
+      description: ID
+      example: Salah Hitung Berat
+    text:
+      type: string
+      description: Dispute Invoice Detail Reason
+      example: Salah Hitung Berat

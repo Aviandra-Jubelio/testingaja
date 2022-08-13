@@ -1,0 +1,10 @@
+type: object
+properties:
+  waiting:
+    type: number
+    description: Counter for shipments that are on waiting status.
+    example: 30
+  processed:
+    type: number
+    description: Counter for shipments that are on processed status.
+    example: 32

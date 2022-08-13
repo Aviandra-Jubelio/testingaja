@@ -1,0 +1,22 @@
+get:
+  tags:
+    - Voucher
+  summary: Get Voucher Details
+  operationId: getDetailVoucher
+  parameters:
+    - $ref: ../components/parameters/authorization.yaml
+    - $ref: ../components/parameters/voucher_id.yaml
+    - $ref: ../components/parameters/is_used_voucher.yaml
+  responses:
+    "200":
+      description: Successful
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/getDetailVoucher.yaml
+    "500":
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/internalServerError.yaml

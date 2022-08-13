@@ -1,0 +1,11 @@
+name: 'method[]'
+in: query
+required: false
+style: form
+description: >-
+  Courier Service Category. Use endpoint 'Get Courier Service Category' to get
+  the value
+schema:
+  type: array
+  items:
+    type: string

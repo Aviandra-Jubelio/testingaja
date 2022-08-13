@@ -1,0 +1,28 @@
+type: array
+items:
+  type: object
+  properties:
+    courier_service_id:
+      type: string
+      description: Courier Service ID
+      example: 12
+    courier_id:
+      type: string
+      description: Courier ID
+      example: 17
+    name:
+      type: string
+      description: Courier Service Name
+      example: Paxel Instant
+    code:
+      type: string
+      description: Courier service category code from the logistics
+      example: INSTANT
+    service_category_id:
+      type: string
+      description: Service Category ID
+      example: 1
+    logo:
+      type: string
+      description: Courier Logo
+      example: 'https://cdn.branch.io/branch-assets/1605683460275-og_image.png'

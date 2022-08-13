@@ -1,0 +1,23 @@
+type: object
+properties:
+  status:
+    type: string
+    description: Cancel Status
+    example: Voucher Successfully Canceled
+  data:
+    type: array
+    items:
+      type: object
+      properties:
+        voucher_id:
+          type: string
+          description: Voucher ID
+          example: 14
+        voucher_name:
+          type: string
+          description: Voucher Name
+          example: Voucher JUNI CERIA 2022
+        remaining_amount:
+          type: number
+          description: Voucher Remaining Amount
+          example: 10000

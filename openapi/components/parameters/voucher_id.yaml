@@ -1,0 +1,7 @@
+name: voucher_id
+in: path
+required: true
+description: Voucher ID
+schema:
+  type: string
+  example: 1

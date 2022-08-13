@@ -1,0 +1,28 @@
+post:
+  tags:
+    - Connect
+  summary: Connect store to Jubelio Shipment.
+  description: >-
+    Connect store in Jubelio Omnichannel to Jubelio Shipment. You should have
+    account in Jubelio Omnichannel to connect with Jubelio Shipment
+  operationId: ConnectShipment
+  parameters:
+    - $ref: ../components/parameters/request_id.yaml
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/connectShipment.yaml
+  responses:
+    "200":
+      description: Successful
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/responseConnectShipment.yaml
+    "500":
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/internalServerError.yaml

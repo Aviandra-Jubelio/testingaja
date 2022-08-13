@@ -1,0 +1,112 @@
+type: object
+properties:
+  shipment_id:
+    type: number
+    description: Shipment ID
+    example: 1
+  ref_no:
+    type: string
+    description: 'Reference number, refers to a transaction number/order number.'
+    example: SP-djsaof8392
+  eta:
+    type: string
+    description: Estimated Arrival Time (ETA) for the package
+    example: 1-2 Februari
+  courier_service_name:
+    type: string
+    description: Courier Service Name
+    example: JNE Reguler
+  courier_logo:
+    type: string
+    description: Courier Logo
+    example: 'https://cdn.branch.io/branch-assets/1605683460275-og_image.png'
+  tracking_link:
+    type: string
+    description: Tracking link
+    example: 'https://shipment.jubelio.com/tracking/reguler/54365347657'
+  origin:
+    type: object
+    properties:
+      name:
+        type: string
+        description: Shipper Name
+        example: Lalisa Manoban
+      phone:
+        type: string
+        description: Shipper Phone Number
+        example: 081273821947
+      address:
+        type: string
+        description: Shipper Address
+        example: Jl. Wahyu Raya No. 888
+      province:
+        type: string
+        description: Province
+        example: DKI Jakarta
+      city:
+        type: string
+        description: City
+        example: Kota Adm Jakarta Selatan
+      district:
+        type: string
+        description: District (Kecamatan)
+        example: Cilandak
+      country:
+        type: string
+        description: Shipper Country
+        example: Indonesia
+      subdistrict:
+        type: string
+        description: Subdistrict (Kelurahan)
+        example: Gandaria Selatan
+      zipcode:
+        type: string
+        description: Shipper Zipcode
+        example: 17425
+      coordinate:
+        type: string
+        description: Shipper Coordinate Location
+        example: '(-6.310273,106.8848316)'
+  destination:
+    type: object
+    properties:
+      name:
+        type: string
+        description: Consignee Name
+        example: Lalisa Manoban
+      phone:
+        type: string
+        description: Consignee Phone Number
+        example: 081273821947
+      address:
+        type: string
+        description: Consignee Address
+        example: Jl. Wahyu Raya No. 888
+      province:
+        type: string
+        description: Province
+        example: DKI Jakarta
+      city:
+        type: string
+        description: City
+        example: Kota Adm Jakarta Selatan
+      district:
+        type: string
+        description: District (Kecamatan)
+        example: Cilandak
+      country:
+        type: string
+        description: Shipper Country
+        example: Indonesia
+      subdistrict:
+        type: string
+        description: Subdistrict (Kelurahan)
+        example: Gandaria Selatan
+      zipcode:
+        type: string
+        description: Shipper Zipcode
+        example: 17425
+      coordinate:
+        type: string
+        description: Shipper Coordinate Location
+        example: '(-6.310273,106.8848316)'

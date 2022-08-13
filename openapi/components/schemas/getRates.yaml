@@ -1,0 +1,40 @@
+type: object
+properties:
+  origin:
+    type: object
+    properties:
+      area_id:
+        type: string
+        description: Area ID
+        example: 31740238279
+      zipcode:
+        type: string
+        description: Shipper Zipcode Location
+        example: 12920
+      coordinate:
+        type: string
+        description: Shipper Coordinate Location
+        example: '(-6.2121761,106.8182448)'
+  destination:
+    type: object
+    properties:
+      area_id:
+        type: string
+        description: Area ID
+        example: 31740238279
+      zipcode:
+        type: string
+        description: Consignee Zipcode Location
+        example: 12920
+      coordinate:
+        type: string
+        description: Consignee Coordinate Location
+        example: '(-6.2121761,106.8182448)'
+  weight:
+    type: number
+    description: Package Weight in gram
+    example: 1000
+  service_category_id:
+    type: string
+    description: Service Category ID
+    example: 1

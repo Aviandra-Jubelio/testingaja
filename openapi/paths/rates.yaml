@@ -1,0 +1,25 @@
+post:
+  tags:
+    - Rates
+  summary: Get Rates for Logistics
+  operationId: GetRates
+  parameters:
+    - $ref: ../components/parameters/authorization.yaml
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/getRates.yaml
+  responses:
+    "200":
+      description: Successful
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/responseGetRates.yaml
+    "500":
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/internalServerError.yaml

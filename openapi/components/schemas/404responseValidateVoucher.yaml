@@ -1,0 +1,36 @@
+type: object
+properties:
+  code:
+    type: string
+    description: Error Code
+    example: ERR_INPUT
+  errors:
+    type: array
+    items:
+      type: object
+      properties:
+        voucher_code:
+          type: string
+          description: >-
+            Voucher code. Voucher code format is
+            **JubelioxUserInputxCompanyIDxRunningNumber**
+          example: JUBELIOJUNICERIA401001
+        message:
+          type: string
+          description: >-
+            Validation message. If the voucher code is invalid, the message will
+            appear as 'voucher tidak ditemukan' **(not found)**, 'voucher sudah
+            kadaluarsa' **(expired)**, 'voucher belum bisa digunakan' **(cannot
+            use before the period start)**, 'voucher sudah digunakan' **(is
+            already used)**.
+          example: Voucher tidak ditemukan
+        is_valid:
+          type: boolean
+          description: >-
+            Voucher validation. If it is false, the voucher is invalid and the
+            customer cannot use it.
+          example: false
+  message:
+    type: string
+    description: Voucher validation summary message
+    example: Vouchers are not eligible

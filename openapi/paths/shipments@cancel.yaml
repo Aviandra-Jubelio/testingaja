@@ -1,0 +1,29 @@
+post:
+  tags:
+    - Shipments
+  summary: Cancel AWB
+  description: >-
+    Cancel Airway Bill. Only if the courier has not picked up the package, can
+    you cancel the airway bill. Please note, not all couriers allow cancellation
+    of the airway bill.
+  operationId: CancelAWB
+  parameters:
+    - $ref: ../components/parameters/authorization.yaml
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/CancelAWB.yaml
+  responses:
+    "200":
+      description: Successful
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/responseCancelAWB.yaml
+    "404":
+      description: Redeem Voucher Error Input Response
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/internalServerError.yaml

@@ -1,0 +1,49 @@
+type: object
+properties:
+  page:
+    type: number
+    description: Page
+    example: 1
+  page_size:
+    type: number
+    description: Page Size
+    example: 10
+  total_page:
+    type: number
+    description: Total Page
+    example: 20
+  total_data:
+    type: number
+    description: Total Data
+    example: 200
+  data:
+    type: array
+    items:
+      type: object
+      properties:
+        invoice_no:
+          type: string
+          description: Invoice Number
+          example: INVJAN2022
+        invoice_id:
+          type: string
+          description: Invoice ID
+          example: 12
+        created_date:
+          type: string
+          description: Invoice created date
+          example: 1 Februari 2022
+        total_expense:
+          type: string
+          description: Total expense
+          example: Invoice amount
+        invoice_status:
+          type: string
+          description: |
+            Invoice Status
+            - 0 - Unreconcile
+            - 1 - Unpaid
+            - 2 - Paid
+            - 3 - Void
+            - 4 - Dispute
+          example: 2

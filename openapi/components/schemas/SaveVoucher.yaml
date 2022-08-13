@@ -1,0 +1,60 @@
+type: object
+required:
+  - voucher_name
+  - voucher_prefix
+  - start_period
+  - end_period
+  - amount
+  - total_voucher
+  - digit
+properties:
+  voucher_id:
+    type: string
+    description: Voucher ID
+    example: 12
+  voucher_name:
+    type: string
+    description: Voucher Name
+    example: IBOKX PROMO JUNI
+  start_period:
+    type: string
+    format: date-time
+    description: 'Voucher period, Start date.'
+    example: 2020-03-04T00:00:00.000Z
+  end_period:
+    type: string
+    format: date-time
+    description: 'Voucher period, End date.'
+    example: 2020-03-04T00:00:00.000Z
+  amount:
+    type: number
+    description: Price per Voucher/Voucher Value.
+    example: 40000
+  total_voucher:
+    type: number
+    description: Total Quantity Voucher
+    example: 5
+  total_amount:
+    type: number
+    description: The total amount spent to create the vouchers
+    example: 200000
+  cashback_left:
+    type: number
+    description: The remaining voucher balance
+    example: 150000
+  digit:
+    type: number
+    description: >-
+      The voucher digit running number. The voucher digit running number will be
+      included in the voucher code. For example, if the digit is 3, then the
+      running number will be 001.
+    example: 3
+  vouchers:
+    type: array
+    items:
+      type: string
+      description: Generated Vouchers
+      example:
+        - JUBELIOxIBOKX001
+        - JUBELIOxIBOKX002
+        - JUBELIOxIBOKX003

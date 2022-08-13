@@ -1,0 +1,8 @@
+name: start_date
+in: query
+required: false
+style: form
+description: Voucher start date. Unix time format
+schema:
+  type: string
+  example: 1655426869

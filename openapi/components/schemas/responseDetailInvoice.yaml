@@ -1,0 +1,82 @@
+type: object
+properties:
+  invoice_no:
+    type: string
+    description: Invoice Number
+    example: INVJAN2022
+  invoice_date:
+    type: string
+    description: Invoice created date
+    example: 1 februari 2022
+  invoice_status:
+    type: string
+    description: Invoice Status
+    example: |
+      Invoice status, consist of:
+        - 0 - Unreconcile
+        - 1 - Unpaid
+        - 2 - Paid
+        - 3 - Void
+        - 4 - Dispute
+  total_shipment_cost:
+    type: number
+    description: Total Shipment Cost. Total amount from 'Biaya' column.
+    example: 1000000
+  total_subsidies:
+    type: number
+    description: Total Subsidies. Total amount from 'Subsidi' column
+    example: 200000
+  list_awb:
+    type: array
+    items:
+      type: object
+      properties:
+        invoice_detail_id:
+          type: string
+          description: Invoice Detail ID
+          example: 2
+        awb_code:
+          type: string
+          description: Airway Bill Code
+          example: CM328947328
+        ref_no:
+          type: string
+          description: Reference Number. Refers to order number/transaction number.
+          example: SP-3284793274
+        courier_service_category:
+          type: string
+          description: Courier Service Category
+          example: REGULER
+        courier_service_name:
+          type: string
+          description: Courier Service Name
+          example: JNE REGULER
+        shipment_date:
+          type: string
+          format: date-time
+          description: Shipment Date
+          example: 2020-03-04T00:00:00.000Z
+        shipment_price:
+          type: number
+          description: >-
+            Initial bill. Should be the same with the shipment_price_bill, but
+            can be different if there is dispute for the AWB.
+          example: 20000
+        shipment_subsidy:
+          type: number
+          description: Shipment subsidy. 15% of the shipment_price
+          example: 3000
+        shipment_price_bill:
+          type: number
+          description: Shipping fee from the logistics
+          example: 20000
+        total_shipment_price_bill:
+          type: number
+          description: shipment_price_bill deducted with the shipment_subisidy
+          example: 17000
+        cost_diff:
+          type: number
+          description: >-
+            Balance. For normal condition, amount should be 0 (shipment_price -
+            (shipment_subsidy + shipment_price_bill))
+          example: 0

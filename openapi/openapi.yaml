@@ -1,0 +1,93 @@
+openapi: 3.0.2
+info:
+  title: Shipment API
+  description: .
+  version: 1.0.0
+  x-logo:
+    url: 'https://drive.google.com/uc?id=1zc-0H_qbdQNdxPZNkQQaV1Px8HDKlHww'
+    backgroundColor: '#FFFFFF'
+    altText: Jubelio Logo
+  license:
+    name: Apache 2.0
+    url: 'https://www.apache.org/licenses/LICENSE-2.0.html'
+servers:
+  - url: 'https://shipment-api.jubelio.com'
+tags:
+  - name: Voucher
+    description: >
+      This includes endpoints to generate vouchers, validate vouchers, redeem
+      vouchers, get a list of all vouchers, and get voucher details.
+  - name: Courier
+    description: |
+      Endpoints to get all the courier that are available in Jubelio Shipment.
+paths:
+  /region/:
+    $ref: paths/region@.yaml
+  /region/provinces:
+    $ref: paths/region@provinces.yaml
+  '/region/area/{district_id}':
+    $ref: 'paths/region@area@{district_id}.yaml'
+  '/region/cities/{province_id}':
+    $ref: 'paths/region@cities@{province_id}.yaml'
+  '/region/districts/{city_id}':
+    $ref: 'paths/region@districts@{city_id}.yaml'
+  /connect:
+    $ref: paths/connect.yaml
+  /auth/generate-token:
+    $ref: paths/auth@generate-token.yaml
+  /shipments:
+    $ref: paths/shipments.yaml
+  /shipments/counter:
+    $ref: paths/shipments@counter.yaml
+  /courier-services/list:
+    $ref: paths/courier-services@list.yaml
+  /services/courier:
+    $ref: paths/services@courier.yaml
+  /services/categories:
+    $ref: paths/services@categories.yaml
+  /voucher/list:
+    $ref: paths/voucher@list.yaml
+  /voucher/counter:
+    $ref: paths/voucher@counter.yaml
+  /voucher/create:
+    $ref: paths/voucher@create.yaml
+  /voucher/generate:
+    $ref: paths/voucher@generate.yaml
+  /invoices/list:
+    $ref: paths/invoices@list.yaml
+  '/invoices/{invoice_id}':
+    $ref: 'paths/invoices@{invoice_id}.yaml'
+  '/shipments/log/{shipment_id}':
+    $ref: 'paths/shipments@log@{shipment_id}.yaml'
+  /shipments/create:
+    $ref: paths/shipments@create.yaml
+  /shipments/cancel:
+    $ref: paths/shipments@cancel.yaml
+  '/shipments/{shipment_id}':
+    $ref: 'paths/shipments@{shipment_id}.yaml'
+  /expense/counter:
+    $ref: paths/expense@counter.yaml
+  /invoice/dispute/invoice-reason:
+    $ref: paths/invoice@dispute@invoice-reason.yaml
+  /invoice/dispute/invoice-detail-reason:
+    $ref: paths/invoice@dispute@invoice-detail-reason.yaml
+  /voucher/redeem:
+    $ref: paths/voucher@redeem.yaml
+  /invoice/reports/:
+    $ref: paths/invoice@reports@.yaml
+  /rates:
+    $ref: paths/rates.yaml
+  /invoice/dispute:
+    $ref: paths/invoice@dispute.yaml
+  /voucher/validate:
+    $ref: paths/voucher@validate.yaml
+  '/voucher/{voucher_id}':
+    $ref: 'paths/voucher@{voucher_id}.yaml'
+  /voucher/cancel-remaining:
+    $ref: paths/voucher@cancel-remaining.yaml
+  /cashback/balance:
+    $ref: paths/cashback@balance.yaml
+  /cashback/history:
+    $ref: paths/cashback@history.yaml
+  /expense/list:
+    $ref: paths/expense@list.yaml

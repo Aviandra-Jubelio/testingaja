@@ -1,0 +1,36 @@
+post:
+  tags:
+    - Voucher
+  summary: Validate Voucher
+  description: >-
+    The process of validating a voucher occurs immediately before the redemption
+    process. <br> A voucher is not valid if = - The voucher code is not exist
+    (Due to wrong input/format). - The voucher code is expired. - The voucher
+    cannot be used at this time. - The voucher code has already been used.
+  operationId: ValidateVoucher
+  parameters:
+    - $ref: ../components/parameters/authorization.yaml
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/ValidateVoucher.yaml
+  responses:
+    "200":
+      description: Successful
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/responseValidateVoucher.yaml
+    "400":
+      description: Successful
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/404responseValidateVoucher.yaml
+    "500":
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/internalServerError.yaml

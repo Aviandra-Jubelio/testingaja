@@ -1,0 +1,68 @@
+type: object
+properties:
+  page:
+    type: number
+    description: Page
+    example: 1
+  page_size:
+    type: number
+    description: Page Size
+    example: 10
+  total_page:
+    type: number
+    description: Total Page
+    example: 20
+  total_data:
+    type: number
+    description: Total Data
+    example: 200
+  data:
+    type: array
+    items:
+      type: object
+      properties:
+        ref_no:
+          type: string
+          description: 'Reference Number, usually refers to Order Number.'
+          example: SP-4325432543
+        courier_service_category:
+          type: string
+          description: 'Courier Service Category. For example= Reguler, Instant, etc.'
+          example: Reguler
+        courier_service_name:
+          type: string
+          description: Courier Service Name
+          example: JNE Reguler
+        courier_logo:
+          type: string
+          description: Courier Logo
+          example: 'https://cdn.branch.io/branch-assets/1605683460275-og_image.png'
+        shipment_date:
+          type: string
+          format: date-time
+          description: Request pickup time.
+          example: 2020-03-04T00:00:00.000Z
+        shipment_price:
+          type: number
+          description: >-
+            Initial bill. Should be the same with the shipment_price_bill, but
+            can be different if there is dispute for the AWB.
+          example: 20000
+        shipment_subsidy:
+          type: number
+          description: Shipment subsidy. 15% of the shipment_price
+          example: 3000
+        shipment_price_bill:
+          type: number
+          description: Shipping fee from the logistics
+          example: 20000
+        total_shipment_price_bill:
+          type: number
+          description: shipment_price_bill deducted with the shipment_subisidy
+          example: 17000
+        cost_diff:
+          type: number
+          description: >-
+            Balance. For normal condition, amount should be 0 (shipment_price -
+            (shipment_subsidy + shipment_price_bill))
+          example: 0

@@ -1,0 +1,6 @@
+type: object
+properties:
+  dispute_invoice_id:
+    type: string
+    description: Dispute Invoice ID
+    example: 24

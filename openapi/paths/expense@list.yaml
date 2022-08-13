@@ -1,0 +1,47 @@
+get:
+  tags:
+    - Expense
+  summary: Get List Expense
+  description: Get the cost of each shipment that occurred during the current month.
+  operationId: GetListExpense
+  parameters:
+    - $ref: ../components/parameters/authorization.yaml
+    - $ref: ../components/parameters/page.yaml
+    - $ref: ../components/parameters/pagesize.yaml
+    - $ref: ../components/parameters/shipmentstartdate.yaml
+    - $ref: ../components/parameters/shipmentenddate.yaml
+    - $ref: ../components/parameters/sortdirection.yaml
+    - $ref: ../components/parameters/couriermethod.yaml
+    - $ref: ../components/parameters/courierservice.yaml
+    - name: sort_by
+      in: query
+      required: false
+      style: form
+      explode: true
+      description: >
+        Sort by all column: ref_no, shipment_date, awb_code,
+        courier_service_name, courier_service_category, shipment_cost,
+        shipping_subsidy, courier, cost_diff
+      schema:
+        type: string
+    - name: q
+      in: query
+      required: false
+      style: form
+      explode: true
+      description: Filter query by ref_no
+      schema:
+        type: string
+  responses:
+    "200":
+      description: Successful
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/ResponseGetListExpense.yaml
+    "500":
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/internalServerError.yaml

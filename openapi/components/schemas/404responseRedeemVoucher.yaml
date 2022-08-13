@@ -1,0 +1,27 @@
+type: object
+properties:
+  code:
+    type: string
+    description: Error code
+    example: ERR_INPUT
+  errors:
+    type: array
+    items:
+      type: object
+      properties:
+        voucher_code:
+          type: string
+          description: Voucher Code
+          example: JUBELIOJUNCERIA401001
+        message:
+          type: string
+          description: Error message
+          example: Voucher sudah digunakan
+        is_valid:
+          type: boolean
+          description: Whether or not the voucher is valid
+          example: false
+  message:
+    type: string
+    description: Redeem Voucher Summary Message
+    example: Vouchers are not eligible

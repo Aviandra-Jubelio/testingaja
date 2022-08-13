@@ -1,0 +1,20 @@
+type: object
+properties:
+  status:
+    type: string
+    description: status cancel
+    example: Cancel Successful
+  awb_code:
+    type: string
+    description: Airway Bill Code
+    example: CM439258340
+  courier_name:
+    type: string
+    description: Courier Name
+    example: Anteraja
+  ref_no:
+    type: string
+    description: >-
+      Reference Number. This refers to transaction number or order number
+      associated with the airway bill.
+    example: SP-74386953478

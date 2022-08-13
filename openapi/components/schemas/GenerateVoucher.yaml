@@ -1,0 +1,21 @@
+type: object
+required:
+  - voucher_prefix
+  - total_voucher
+  - digit
+properties:
+  voucher_prefix:
+    type: string
+    description: Voucher prefix. Voucher prefix will be included on the voucher code
+    example: JUNICERIA
+  total_voucher:
+    type: number
+    description: Voucher Quantity
+    example: 3
+  digit:
+    type: number
+    description: >-
+      The voucher digit running number. The voucher digit running number will be
+      included in the voucher code. If the digit is 3, then the running number
+      will be 001.
+    example: 3

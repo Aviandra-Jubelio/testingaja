@@ -1,0 +1,9 @@
+name: request_id
+in: header
+required: true
+style: simple
+explode: false
+description: Request ID
+example: eyJhbGciOiJIUzI1N
+schema:
+  type: string

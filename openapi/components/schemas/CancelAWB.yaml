@@ -1,0 +1,13 @@
+type: object
+required:
+  - cancel_reason
+  - awb_code
+properties:
+  cancel_reason:
+    type: string
+    description: Cancel Reason. Obtain the value from **Get List Reason Cancel AWB**.
+    example: Barang Belum Siap
+  awb_code:
+    type: string
+    description: Airway Bill Code
+    example: CM8439257346

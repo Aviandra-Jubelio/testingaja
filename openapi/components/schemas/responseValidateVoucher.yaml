@@ -1,0 +1,71 @@
+type: object
+properties:
+  data:
+    type: array
+    items:
+      type: object
+      properties:
+        voucher_code_id:
+          type: string
+          description: Voucher Code ID
+          example: 1
+        voucher_id:
+          type: string
+          description: Voucher ID
+          example: 1
+        voucher_code:
+          type: string
+          description: >-
+            Voucher code. Voucher code format is
+            **JubelioxUserInputxCompanyIDxRunningNumber**
+          example: JUBELIOJUNICERIA401001
+        is_used:
+          type: boolean
+          description: Whether the voucher is already used or not.
+          example: null
+        voucher_name:
+          type: string
+          description: Voucher Name
+          example: DELL PROMO JUNI
+        voucher_type:
+          type: string
+          description: 'Voucher Type. 1= Transaction Voucher, 2= Free Shipping Voucher'
+          example: 1
+        voucher_prefix:
+          type: string
+          description: Voucher Prefix. Part of voucher code.
+          example: JUNICERIA
+        start_period:
+          type: string
+          format: date-time
+          description: 'Voucher Period, Start date'
+          example: 2022-06-25T00:00:00.000Z
+        end_period:
+          type: string
+          format: date-time
+          description: 'Voucher Period, End date'
+          example: 2022-06-25T00:00:00.000Z
+        total_voucher:
+          type: number
+          description: Total Quantity Voucher
+          example: 3
+        amount:
+          type: number
+          description: Voucher amount
+          example: 5000
+        message:
+          type: string
+          description: >-
+            Validation message. If the voucher code is valid, the message will
+            appear as **'Voucher dapat digunakan'**. But if the voucher code is
+            invalid, the message will appear as 'voucher tidak ditemukan' **(not
+            found)**, 'voucher sudah kadaluarsa' **(expired)**, 'voucher belum
+            bisa digunakan' **(cannot use before the period start)**, 'voucher
+            sudah digunakan' **(is already used)**.
+          example: Voucher dapat digunakan
+        is_valid:
+          type: boolean
+          description: >-
+            Voucher validation. If it's true, voucher is valid and can be
+            applied by the customer
+          example: true

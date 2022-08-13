@@ -1,0 +1,48 @@
+type: object
+properties:
+  voucher_name:
+    type: string
+    description: Voucher Name
+    example: VOUCHER JUNI CERIA 2022
+  voucher_period_start:
+    type: string
+    description: 'Voucher Period, Start Date'
+    example: 1 Januari 2022
+  voucher_period_end:
+    type: string
+    description: 'Voucher Period, End Date'
+    example: 30 Januari 2022
+  voucher_amount:
+    type: number
+    description: Price per Voucher/Voucher Value
+    example: 100000
+  voucher_qty:
+    type: number
+    description: Voucher Quantity
+    example: 10
+  voucher_code:
+    type: string
+    description: >-
+      Voucher code/Voucher prefix. A voucher prefix will be included when
+      generating the voucher.
+    example: JUNICERIA
+  vouchers:
+    type: array
+    items:
+      type: object
+      description: List of generated vouchers with their status.
+      properties:
+        voucher:
+          type: string
+          description: Generated Voucher Code.
+          example: JUBELIOJUNICERIA401001
+        ref_no:
+          type: string
+          description: >-
+            Reference Number. This refers to a transaction or order number
+            associated with the voucher.
+          example: SP-432543254
+        is_used:
+          type: boolean
+          description: Whether the voucher has already been used or not.
+          example: true

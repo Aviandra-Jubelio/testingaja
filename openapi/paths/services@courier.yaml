@@ -1,0 +1,20 @@
+get:
+  tags:
+    - Courier
+  summary: Get a list of couriers by service category
+  operationId: getListCourierbyServiceCategory
+  parameters:
+    - $ref: ../components/parameters/servicecategoryid.yaml
+  responses:
+    "200":
+      description: Successful
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/getListCourierbyServiceCategory.yaml
+    "500":
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/internalServerError.yaml

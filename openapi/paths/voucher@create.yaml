@@ -1,0 +1,28 @@
+post:
+  tags:
+    - Voucher
+  summary: Create/Save Vouchers
+  description: >-
+    Save the previously created voucher. You have to create the voucher first
+    using Generate Vouchers endpoint.
+  operationId: SaveVoucher
+  parameters:
+    - $ref: ../components/parameters/authorization.yaml
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/SaveVoucher.yaml
+  responses:
+    "200":
+      description: Successful
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/responseSaveVoucher.yaml
+    "500":
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/internalServerError.yaml

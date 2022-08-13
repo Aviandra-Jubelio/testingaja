@@ -1,0 +1,27 @@
+get:
+  tags:
+    - Invoice
+  summary: Get Invoice Details
+  operationId: DetailInvoice
+  parameters:
+    - $ref: ../components/parameters/authorization.yaml
+    - name: invoice_id
+      in: path
+      required: true
+      description: Invoice ID
+      schema:
+        type: string
+        example: 2
+  responses:
+    "200":
+      description: Successful
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/responseDetailInvoice.yaml
+    "500":
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/internalServerError.yaml

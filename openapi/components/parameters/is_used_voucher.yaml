@@ -1,0 +1,7 @@
+name: is_used
+in: query
+required: true
+description: Whether or not the voucher is already used
+schema:
+  type: boolean
+  example: true

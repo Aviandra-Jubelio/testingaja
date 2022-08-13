@@ -1,0 +1,53 @@
+type: object
+properties:
+  page:
+    type: number
+    description: Page
+    example: 1
+  page_size:
+    type: number
+    description: Page Size
+    example: 10
+  total_page:
+    type: number
+    description: Total Page
+    example: 20
+  total_data:
+    type: number
+    description: Total Data
+    example: 200
+  data:
+    type: array
+    items:
+      type: object
+      properties:
+        cashback_id:
+          type: string
+          description: Cashback ID
+          example: 12
+        ref_no:
+          type: string
+          description: >-
+            Transaction number, if the cashback type is **Voucher** then the
+            transaction number will be the voucher name. If the cashback type is
+            **Pengiriman** then the transaction number will be the airway bill
+            number.
+          example: Voucher Juni 2022 (Voucher Name)/ CM8372489372 (Airway Bill Number)
+        cashback_date:
+          type: string
+          format: date-time
+          description: >-
+            If the cashback type is **Voucher** then it will be the date when
+            the cashback is used to generate the voucher. If the cashback type
+            is **Pengiriman** then it will be the request pickup time.
+          example: 2022-06-21T08:00:00.000Z
+        cashback_type:
+          type: string
+          description: >-
+            Cashback type. There are 2 types of cashback, 1 =  **'Pengiriman'**
+            and 2 = **'Voucher'**
+          example: 2
+        cashback_amount:
+          type: number
+          description: 'The amount will be minus, if the cashback type is voucher.'
+          example: -100000

@@ -1,0 +1,42 @@
+type: object
+properties:
+  voucher_id:
+    type: string
+    description: Voucher ID
+    example: 12
+  voucher_name:
+    type: string
+    description: Voucher Name
+    example: IBOKX PROMO JUNI
+  start_period:
+    type: string
+    format: date-time
+    description: 'Voucher Period, Start Date'
+    example: 2020-03-04T00:00:00.000Z
+  end_period:
+    type: string
+    format: date-time
+    description: 'Voucher period, End date'
+    example: 2020-03-04T00:00:00.000Z
+  amount:
+    type: number
+    description: Voucher Amount
+    example: 5000
+  total_voucher:
+    type: number
+    description: Total Voucher
+    example: 3
+  total_amount:
+    type: number
+    description: Total Amount
+    example: 15000
+  cashback_left:
+    type: number
+    description: Cashback Left
+    example: 4760000
+  vouchers:
+    type: array
+    description: Vouchers successfully generated.
+    example:
+      - JUBELIOIBOKX401001
+      - JUBELIOIBOKX401002

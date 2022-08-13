@@ -1,0 +1,8 @@
+name: invoice_amount_start
+in: query
+required: false
+style: form
+description: 'Invoice amount, minimum value'
+schema:
+  type: number
+  example: 100000

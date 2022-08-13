@@ -1,0 +1,23 @@
+get:
+  tags:
+    - Expense
+  summary: Expense Summary Counter
+  description: >-
+    The counter will calculate total cost of the shipment, potential cashback,
+    and total amount that the seller should pay.
+  operationId: ExpenseCounter
+  parameters:
+    - $ref: ../components/parameters/authorization.yaml
+  responses:
+    "200":
+      description: Successful
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/responseExpenseSummaryCounter.yaml
+    "500":
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/internalServerError.yaml

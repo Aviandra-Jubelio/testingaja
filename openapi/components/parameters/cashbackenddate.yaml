@@ -1,0 +1,8 @@
+name: end_date
+in: query
+required: false
+style: form
+description: Cashback end date. Unix time format
+schema:
+  type: string
+  example: 1655426869

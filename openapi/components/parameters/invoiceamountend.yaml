@@ -1,0 +1,8 @@
+name: invoice_amount_end
+in: query
+required: false
+style: form
+description: 'Invoice amount, maximum value'
+schema:
+  type: number
+  example: 200000

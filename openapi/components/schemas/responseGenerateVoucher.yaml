@@ -1,0 +1,9 @@
+type: object
+properties:
+  vouchers:
+    type: array
+    items:
+      type: string
+      example:
+        - JUBELIOJUNICERIA401001
+        - JUBELIOJUNICERIA401002

@@ -1,0 +1,71 @@
+type: object
+properties:
+  page:
+    type: number
+    description: Refer page
+    example: 1
+  page_size:
+    type: number
+    description: Total row per page
+    example: 10
+  total_page:
+    type: number
+    description: Total Page
+    example: 20
+  total_data:
+    type: number
+    description: Total Data
+    example: 200
+  data:
+    type: array
+    items:
+      type: object
+      properties:
+        shipment_id:
+          type: string
+          description: Shipment ID
+          example: 1
+        ref_no:
+          type: string
+          description: 'Reference number, refers to order/transaction number.'
+          example: SP-djsaof8392
+        shipment_date:
+          type: string
+          description: Shipment Date
+          example: '8 Januari 2022, 15:34:00'
+        awb_code:
+          type: string
+          description: Airway Bill Code
+          example: CM32847302455
+        shipment_status:
+          type: string
+          description: >-
+            Shipment Status. You can search for these shipping statuses below =
+            a. ALL b. WAITING C. PROCESSED d. CONFIRMED_BY_COURIER e.
+            ON_THE_WAY_PICK_UP f. PICKED_UP g. ON_DELIVERY h. ON_HOLD i. DONE j.
+            DELIVERED k. RETURNED l. CANCELED m. DECLINED n. SHIPMENT_ISSUE
+          example: DECLINED
+        courier_name:
+          type: string
+          description: Courier Name
+          example: JNE
+        courier_logo:
+          type: string
+          description: Courier Logo
+          example: 'https://cdn.branch.io/branch-assets/1605683460275-og_image.png'
+        courier_id:
+          type: string
+          description: Courier ID
+          example: 11
+        courier_service_name:
+          type: string
+          description: Courier Service Name
+          example: JNE Reguler
+        courier_service_id:
+          type: string
+          description: Courier Service ID
+          example: 1111
+        courier_service_category:
+          type: string
+          description: Courier Service Category
+          example: REGULER

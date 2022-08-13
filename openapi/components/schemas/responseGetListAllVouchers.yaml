@@ -1,0 +1,45 @@
+type: object
+properties:
+  page:
+    type: number
+    description: Page
+    example: 1
+  page_size:
+    type: number
+    description: Page Size
+    example: 10
+  total_page:
+    type: number
+    description: Total Page
+    example: 20
+  total_data:
+    type: number
+    description: Total Data
+    example: 200
+  data:
+    type: array
+    items:
+      type: object
+      properties:
+        voucher_id:
+          type: string
+          description: Voucher ID
+          example: 1
+        voucher_period:
+          type: string
+          description: Voucher Period
+          example: 1 Januari 2022 - 31 Januari 2022
+        voucher_type:
+          type: string
+          description: >-
+            Voucher type. For now, there is only one type of voucher which is
+            'Voucher Pembelian'.
+          example: Voucher Pembelian
+        voucher_name:
+          type: string
+          description: Voucher Name
+          example: JUNI CERIA 2022
+        voucher_qty:
+          type: number
+          description: Remaining quantity voucher available
+          example: 50

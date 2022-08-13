@@ -1,0 +1,10 @@
+type: object
+properties:
+  token:
+    type: string
+    description: Access Token
+    example: 321432143dsafdsa
+  expires_in:
+    type: string
+    description: Expired time for the token in seconds.
+    example: 86400

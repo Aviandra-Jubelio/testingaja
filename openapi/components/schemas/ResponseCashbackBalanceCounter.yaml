@@ -1,0 +1,10 @@
+type: object
+properties:
+  period:
+    type: string
+    description: Cashback Period
+    example: '2022, June'
+  cashback_balance:
+    type: number
+    description: Cashback Balance
+    example: 50000

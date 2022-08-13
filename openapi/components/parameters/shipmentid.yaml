@@ -1,0 +1,7 @@
+name: shipment_id
+in: path
+required: true
+description: Shipment ID
+example: 1
+schema:
+  type: string

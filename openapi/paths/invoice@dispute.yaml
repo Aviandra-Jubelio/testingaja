@@ -1,0 +1,34 @@
+post:
+  tags:
+    - Invoice
+  summary: Dispute Invoice
+  description: >-
+    If the seller does not agree with the price stated on the invoice, the
+    seller can submit a dispute for the invoice.
+  operationId: DisputeInvoice
+  parameters:
+    - $ref: ../components/parameters/authorization.yaml
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/DisputeInvoice.yaml
+  responses:
+    "200":
+      description: Successful
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/responseDisputeInvoice.yaml
+    "400":
+      description: Successful
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/404responseDisputeInvoice.yaml
+    "500":
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/internalServerError.yaml

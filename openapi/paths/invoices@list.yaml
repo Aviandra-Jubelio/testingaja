@@ -1,0 +1,50 @@
+get:
+  tags:
+    - Invoice
+  summary: Get List of Invoices
+  description: "Get a list of invoices with all payment statuses (Paid, Unpaid, Void)."
+  operationId: ListInvoices
+  parameters:
+    - $ref: ../components/parameters/authorization.yaml
+    - $ref: ../components/parameters/page.yaml
+    - $ref: ../components/parameters/pagesize.yaml
+    - $ref: ../components/parameters/sortdirection.yaml
+    - $ref: ../components/parameters/invoice_status.yaml
+    - $ref: ../components/parameters/invoiceamountstart.yaml
+    - $ref: ../components/parameters/invoiceamountend.yaml
+    - $ref: ../components/parameters/invoicestartdate.yaml
+    - $ref: ../components/parameters/invoiceenddate.yaml
+    - name: q
+      in: query
+      required: false
+      style: form
+      explode: true
+      description: Filter Query by invoice_no
+      schema:
+        type: string
+    - name: sort_by
+      in: query
+      required: false
+      style: form
+      explode: true
+      description: |
+        sort by all column:
+          - invoice_no
+          - created_date
+          - grand_total
+          - voucher_qty
+      schema:
+        type: string
+  responses:
+    "200":
+      description: Successful
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/responseListInvoice.yaml
+    "404":
+      description: Redeem Voucher Error Input Response
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/internalServerError.yaml
