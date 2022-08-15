@@ -227,10 +227,11 @@ paths:
       summary: Get a list of generated AWB
       description: >-
         Get information about the list of shipments that are already in progress
-        or completed. <br> List of tracking statuses you can search= 1. ALL 2.
-        WAITING 3. PROCESSED 4. CONFIRMED_BY_COURIER 5. ON_THE_WAY_PICK_UP 6.
-        PICKED_UP 7. ON_DELIVERY 8. ON_HOLD 9. DONE 10. DELIVERED 11. RETURNED
-        12. CANCELED 13. DECLINED 14. SHIPMENT_ISSUE
+        or completed. <br> List of tracking statuses you can search= <br> 1. ALL
+        <br> 2. WAITING <br> 3. PROCESSED <br> 4. CONFIRMED_BY_COURIER <br> 5.
+        ON_THE_WAY_PICK_UP <br> 6. PICKED_UP <br> 7. ON_DELIVERY <br> 8. ON_HOLD
+        <br> 9. DONE <br> 10. DELIVERED <br> 11. RETURNED <br> 12. CANCELED <br>
+        13. DECLINED <br> 14. SHIPMENT_ISSUE <br>
       operationId: ListGeneratedAWB
       parameters:
         - $ref: '#/components/parameters/authorization'
@@ -650,6 +651,9 @@ paths:
       tags:
         - Shipments
       summary: Get AWB Details
+      description: >-
+        Get information about the shipper, consignee, courier based on specific
+        airway bill.
       operationId: getDetailAWB
       parameters:
         - $ref: '#/components/parameters/authorization'
@@ -673,8 +677,9 @@ paths:
         - Expense
       summary: Expense Summary Counter
       description: >-
-        The counter will calculate total cost of the shipment, potential
-        cashback, and total amount that the seller should pay.
+        The counter will calculate the total cost of the shipment, any potential
+        cashback, and the total amount that the seller must pay in the current
+        month.
       operationId: ExpenseCounter
       parameters:
         - $ref: '#/components/parameters/authorization'
@@ -960,7 +965,7 @@ paths:
       summary: Cashback Balance Counter
       description: >-
         A cashback balance is the same as a voucher balance. You can only create
-        vouchers if you have balance in your account.
+        vouchers if you have voucher balance in your account.
       operationId: CashbackBalanceCounter
       parameters:
         - $ref: '#/components/parameters/authorization'
@@ -983,7 +988,7 @@ paths:
         - Cashback
       summary: Get Cashback History
       description: >-
-        You can use this endpoint to get information about the use of your
+        You can use this endpoint to get information about the use of the
         voucher balance.
       operationId: getCashbackHistory
       parameters:
@@ -1794,30 +1799,32 @@ components:
             total:
               type: number
               description: >-
-                Cashback amount for seller to generate the vouchers. Obtained
-                from 7% of shipment cost.
+                Voucher balance for seller to generate the vouchers. The amount
+                is 7% of the shipping cost.
               example: 100000
             remaining_balance:
               type: number
-              description: Remaining balance that can be use to create the voucher.
+              description: Balance to generate the vouchers.
               example: 50000
             voucher_total_amount:
               type: number
-              description: The balance that has has been used for making vouchers
+              description: The amount of vouchers that have already been generated.
               example: 50000
             remaining_voucher:
               type: number
-              description: Remaining quantity of the voucher
+              description: >-
+                The remaining quantity/_of a voucher that is still redeemable
+                for customers.
               example: 5
             current_shipment:
               type: number
-              description: Number of shipments that have been done
+              description: Number of shipments that have been done.
               example: 40
             shipment_required:
               type: number
               description: >-
                 Number of shipments that must be achieved to get the cashback
-                (100 shipments).
+                (100 regular shipments).
               example: 100
     SaveVoucher:
       type: object
@@ -2019,8 +2026,8 @@ components:
                   Invoice Status
                   - 0 - Unreconcile
                   - 1 - Unpaid
-                  - 2 - Paid
-                  - 3 - Void
+                  - 2 - Void
+                  - 3 - Paid
                   - 4 - Dispute
                 example: 2
     responseDetailInvoice:
@@ -2104,7 +2111,7 @@ components:
                 type: number
                 description: >-
                   Balance. For normal condition, amount should be 0
-                  (shipment_price - (shipment_subsidy + shipment_price_bill))
+                  (shipment_price - shipment_price_bill)
                 example: 0
     ShipmentLog:
       type: object
@@ -2434,7 +2441,7 @@ components:
               example: Cilandak
             country:
               type: string
-              description: Shipper Country
+              description: Country
               example: Indonesia
             subdistrict:
               type: string
@@ -2442,11 +2449,11 @@ components:
               example: Gandaria Selatan
             zipcode:
               type: string
-              description: Shipper Zipcode
+              description: Consignee Zipcode
               example: 17425
             coordinate:
               type: string
-              description: Shipper Coordinate Location
+              description: Consignee Coordinate Location
               example: (-6.310273,106.8848316)
     responseExpenseSummaryCounter:
       type: object
@@ -2460,11 +2467,13 @@ components:
           properties:
             expense:
               type: number
-              description: Total shipment cost in the running month
+              description: Total shipment costs for the current month.
               example: 8000000
             cashback:
               type: number
-              description: 15% of total shipment cost (expense)
+              description: >-
+                The potential cashback. The amount is 15% of total shipment
+                cost.
               example: 1200000
             total:
               type: number
@@ -2477,7 +2486,7 @@ components:
         properties:
           id:
             type: string
-            description: ID
+            description: The same with dispute invoice reason.
             example: Kesalahan biaya
           text:
             type: string
@@ -2946,7 +2955,7 @@ components:
           example: 2022, June
         cashback_balance:
           type: number
-          description: Cashback Balance
+          description: Voucher balance to create vouchers
           example: 50000
     ResponseCashbackHistory:
       type: object
@@ -2991,7 +3000,7 @@ components:
                 format: date-time
                 description: >-
                   If the cashback type is **Voucher** then it will be the date
-                  when the cashback is used to generate the voucher. If the
+                  when the balance is used to generate the voucher. If the
                   cashback type is **Pengiriman** then it will be the request
                   pickup time.
                 example: '2022-06-21T08:00:00.000Z'
@@ -3031,11 +3040,22 @@ components:
             properties:
               ref_no:
                 type: string
-                description: Reference Number, usually refers to Order Number.
+                description: >-
+                  Reference Number, usually refers to order number/transaction
+                  number.
                 example: SP-4325432543
+              shipment_date:
+                type: string
+                format: date-time
+                description: Request pickup time.
+                example: '2020-03-04T00:00:00.000Z'
+              awb_code:
+                type: string
+                description: Airway Bill Code
+                example: CM8347435758
               courier_service_category:
                 type: string
-                description: Courier Service Category. For example= Reguler, Instant, etc.
+                description: Courier Service Category. For example = Reguler, Instant, etc.
                 example: Reguler
               courier_service_name:
                 type: string
@@ -3045,11 +3065,6 @@ components:
                 type: string
                 description: Courier Logo
                 example: https://cdn.branch.io/branch-assets/1605683460275-og_image.png
-              shipment_date:
-                type: string
-                format: date-time
-                description: Request pickup time.
-                example: '2020-03-04T00:00:00.000Z'
               shipment_price:
                 type: number
                 description: >-
@@ -3071,6 +3086,6 @@ components:
               cost_diff:
                 type: number
                 description: >-
-                  Balance. For normal condition, amount should be 0
-                  (shipment_price - (shipment_subsidy + shipment_price_bill))
+                  Balance. shipment_price should have the same amount as
+                  shipment_price_bill so there is no difference (0).
                 example: 0

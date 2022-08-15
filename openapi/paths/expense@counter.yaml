@@ -3,8 +3,9 @@ get:
     - Expense
   summary: Expense Summary Counter
   description: >-
-    The counter will calculate total cost of the shipment, potential cashback,
-    and total amount that the seller should pay.
+    The counter will calculate the total cost of the shipment, any potential
+    cashback, and the total amount that the seller must pay in the current
+    month.
   operationId: ExpenseCounter
   parameters:
     - $ref: ../components/parameters/authorization.yaml

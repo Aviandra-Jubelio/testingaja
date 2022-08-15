@@ -6,5 +6,5 @@ properties:
     example: '2022, June'
   cashback_balance:
     type: number
-    description: Cashback Balance
+    description: Voucher balance to create vouchers
     example: 50000

@@ -23,11 +23,20 @@ properties:
       properties:
         ref_no:
           type: string
-          description: 'Reference Number, usually refers to Order Number.'
+          description: 'Reference Number, usually refers to order number/transaction number.'
           example: SP-4325432543
+        shipment_date:
+          type: string
+          format: date-time
+          description: Request pickup time.
+          example: 2020-03-04T00:00:00.000Z
+        awb_code:
+          type: string
+          description: Airway Bill Code
+          example: CM8347435758
         courier_service_category:
           type: string
-          description: 'Courier Service Category. For example= Reguler, Instant, etc.'
+          description: 'Courier Service Category. For example = Reguler, Instant, etc.'
           example: Reguler
         courier_service_name:
           type: string
@@ -37,11 +46,6 @@ properties:
           type: string
           description: Courier Logo
           example: 'https://cdn.branch.io/branch-assets/1605683460275-og_image.png'
-        shipment_date:
-          type: string
-          format: date-time
-          description: Request pickup time.
-          example: 2020-03-04T00:00:00.000Z
         shipment_price:
           type: number
           description: >-
@@ -63,6 +67,6 @@ properties:
         cost_diff:
           type: number
           description: >-
-            Balance. For normal condition, amount should be 0 (shipment_price -
-            (shipment_subsidy + shipment_price_bill))
+            Balance. shipment_price should have the same amount as
+            shipment_price_bill so there is no difference (0).
           example: 0

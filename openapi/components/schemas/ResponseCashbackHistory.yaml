@@ -38,8 +38,8 @@ properties:
           format: date-time
           description: >-
             If the cashback type is **Voucher** then it will be the date when
-            the cashback is used to generate the voucher. If the cashback type
-            is **Pengiriman** then it will be the request pickup time.
+            the balance is used to generate the voucher. If the cashback type is
+            **Pengiriman** then it will be the request pickup time.
           example: 2022-06-21T08:00:00.000Z
         cashback_type:
           type: string

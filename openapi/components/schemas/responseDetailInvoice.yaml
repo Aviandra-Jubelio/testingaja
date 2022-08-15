@@ -78,5 +78,5 @@ properties:
           type: number
           description: >-
             Balance. For normal condition, amount should be 0 (shipment_price -
-            (shipment_subsidy + shipment_price_bill))
+            shipment_price_bill)
           example: 0

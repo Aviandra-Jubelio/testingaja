@@ -4,7 +4,7 @@ items:
   properties:
     id:
       type: string
-      description: ID
+      description: The same with dispute invoice reason.
       example: Kesalahan biaya
     text:
       type: string

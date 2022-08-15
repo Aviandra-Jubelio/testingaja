@@ -10,28 +10,28 @@ properties:
       total:
         type: number
         description: >-
-          Cashback amount for seller to generate the vouchers. Obtained from 7%
-          of shipment cost.
+          Voucher balance for seller to generate the vouchers. The amount is 7%
+          of the shipping cost.
         example: 100000
       remaining_balance:
         type: number
-        description: Remaining balance that can be use to create the voucher.
+        description: Balance to generate the vouchers.
         example: 50000
       voucher_total_amount:
         type: number
-        description: The balance that has has been used for making vouchers
+        description: The amount of vouchers that have already been generated.
         example: 50000
       remaining_voucher:
         type: number
-        description: Remaining quantity of the voucher
+        description: "The remaining quantity/_of a voucher that is still redeemable for customers."
         example: 5
       current_shipment:
         type: number
-        description: Number of shipments that have been done
+        description: Number of shipments that have been done.
         example: 40
       shipment_required:
         type: number
         description: >-
           Number of shipments that must be achieved to get the cashback (100
-          shipments).
+          regular shipments).
         example: 100

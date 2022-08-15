@@ -43,7 +43,7 @@ properties:
             Invoice Status
             - 0 - Unreconcile
             - 1 - Unpaid
-            - 2 - Paid
-            - 3 - Void
+            - 2 - Void
+            - 3 - Paid
             - 4 - Dispute
           example: 2

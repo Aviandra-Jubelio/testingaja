@@ -4,7 +4,7 @@ get:
   summary: Cashback Balance Counter
   description: >-
     A cashback balance is the same as a voucher balance. You can only create
-    vouchers if you have balance in your account.
+    vouchers if you have voucher balance in your account.
   operationId: CashbackBalanceCounter
   parameters:
     - $ref: ../components/parameters/authorization.yaml

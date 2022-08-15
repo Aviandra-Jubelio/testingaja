@@ -2,6 +2,9 @@ get:
   tags:
     - Shipments
   summary: Get AWB Details
+  description: >-
+    Get information about the shipper, consignee, courier based on specific
+    airway bill.
   operationId: getDetailAWB
   parameters:
     - $ref: ../components/parameters/authorization.yaml

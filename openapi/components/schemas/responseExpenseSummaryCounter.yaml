@@ -9,11 +9,11 @@ properties:
     properties:
       expense:
         type: number
-        description: Total shipment cost in the running month
+        description: Total shipment costs for the current month.
         example: 8000000
       cashback:
         type: number
-        description: 15% of total shipment cost (expense)
+        description: The potential cashback. The amount is 15% of total shipment cost.
         example: 1200000
       total:
         type: number

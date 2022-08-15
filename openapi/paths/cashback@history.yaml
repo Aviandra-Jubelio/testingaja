@@ -3,7 +3,7 @@ get:
     - Cashback
   summary: Get Cashback History
   description: >-
-    You can use this endpoint to get information about the use of your voucher
+    You can use this endpoint to get information about the use of the voucher
     balance.
   operationId: getCashbackHistory
   parameters:

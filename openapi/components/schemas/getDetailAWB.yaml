@@ -96,7 +96,7 @@ properties:
         example: Cilandak
       country:
         type: string
-        description: Shipper Country
+        description: Country
         example: Indonesia
       subdistrict:
         type: string
@@ -104,9 +104,9 @@ properties:
         example: Gandaria Selatan
       zipcode:
         type: string
-        description: Shipper Zipcode
+        description: Consignee Zipcode
         example: 17425
       coordinate:
         type: string
-        description: Shipper Coordinate Location
+        description: Consignee Coordinate Location
         example: '(-6.310273,106.8848316)'
