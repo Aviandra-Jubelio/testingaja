@@ -5,7 +5,7 @@ get:
   description: Get a list of cities information
   operationId: GetCities
   parameters:
-    - $ref: ..\components\parameters\authorization.yaml
+    - $ref: ../components/parameters/authorization.yaml
     - name: province_id
       in: path
       description: Province ID
@@ -14,15 +14,15 @@ get:
         type: string
         example: 11
   responses:
-    '200':
+    "200":
       description: Successful
       content:
         application/json:
           schema:
-            $ref: ..\components\schemas\getCities.yaml
-    '500':
+            $ref: ../components/schemas/getCities.yaml
+    "500":
       description: Internal Server Error
       content:
         application/json:
           schema:
-            $ref: ..\components\schemas\internalServerError.yaml
+            $ref: ../components/schemas/internalServerError.yaml

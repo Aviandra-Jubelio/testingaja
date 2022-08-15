@@ -10,28 +10,28 @@ post:
     already been used. <br>
   operationId: ValidateVoucher
   parameters:
-    - $ref: ..\components\parameters\authorization.yaml
+    - $ref: ../components/parameters/authorization.yaml
   requestBody:
     content:
       application/json:
         schema:
-          $ref: ..\components\schemas\ValidateVoucher.yaml
+          $ref: ../components/schemas/ValidateVoucher.yaml
   responses:
-    '200':
+    "200":
       description: Successful
       content:
         application/json:
           schema:
-            $ref: ..\components\schemas\responseValidateVoucher.yaml
-    '400':
+            $ref: ../components/schemas/responseValidateVoucher.yaml
+    "400":
       description: Successful
       content:
         application/json:
           schema:
-            $ref: ..\components\schemas\404responseValidateVoucher.yaml
-    '500':
+            $ref: ../components/schemas/404responseValidateVoucher.yaml
+    "500":
       description: Internal Server Error
       content:
         application/json:
           schema:
-            $ref: ..\components\schemas\internalServerError.yaml
+            $ref: ../components/schemas/internalServerError.yaml

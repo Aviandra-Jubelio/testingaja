@@ -5,14 +5,14 @@ get:
   description: Get a list of vouchers that are already created.
   operationId: getListAllVouchers
   parameters:
-    - $ref: ..\components\parameters\authorization.yaml
-    - $ref: ..\components\parameters\page.yaml
-    - $ref: ..\components\parameters\pagesize.yaml
-    - $ref: ..\components\parameters\sortdirection.yaml
-    - $ref: ..\components\parameters\periodstartdate.yaml
-    - $ref: ..\components\parameters\periodenddate.yaml
-    - $ref: ..\components\parameters\qtyvoucherstart.yaml
-    - $ref: ..\components\parameters\qtyvoucherend.yaml
+    - $ref: ../components/parameters/authorization.yaml
+    - $ref: ../components/parameters/page.yaml
+    - $ref: ../components/parameters/pagesize.yaml
+    - $ref: ../components/parameters/sortdirection.yaml
+    - $ref: ../components/parameters/periodstartdate.yaml
+    - $ref: ../components/parameters/periodenddate.yaml
+    - $ref: ../components/parameters/qtyvoucherstart.yaml
+    - $ref: ../components/parameters/qtyvoucherend.yaml
     - name: sort_by
       in: query
       required: false
@@ -35,15 +35,15 @@ get:
       schema:
         type: string
   responses:
-    '200':
+    "200":
       description: Successful
       content:
         application/json:
           schema:
-            $ref: ..\components\schemas\responseGetListAllVouchers.yaml
-    '500':
+            $ref: ../components/schemas/responseGetListAllVouchers.yaml
+    "500":
       description: Internal Server Error
       content:
         application/json:
           schema:
-            $ref: ..\components\schemas\internalServerError.yaml
+            $ref: ../components/schemas/internalServerError.yaml

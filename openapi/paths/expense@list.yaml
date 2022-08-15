@@ -5,14 +5,14 @@ get:
   description: Get the cost of each shipment that occurred during the current month.
   operationId: GetListExpense
   parameters:
-    - $ref: ..\components\parameters\authorization.yaml
-    - $ref: ..\components\parameters\page.yaml
-    - $ref: ..\components\parameters\pagesize.yaml
-    - $ref: ..\components\parameters\shipmentstartdate.yaml
-    - $ref: ..\components\parameters\shipmentenddate.yaml
-    - $ref: ..\components\parameters\sortdirection.yaml
-    - $ref: ..\components\parameters\couriermethod.yaml
-    - $ref: ..\components\parameters\courierservice.yaml
+    - $ref: ../components/parameters/authorization.yaml
+    - $ref: ../components/parameters/page.yaml
+    - $ref: ../components/parameters/pagesize.yaml
+    - $ref: ../components/parameters/shipmentstartdate.yaml
+    - $ref: ../components/parameters/shipmentenddate.yaml
+    - $ref: ../components/parameters/sortdirection.yaml
+    - $ref: ../components/parameters/couriermethod.yaml
+    - $ref: ../components/parameters/courierservice.yaml
     - name: sort_by
       in: query
       required: false
@@ -33,15 +33,15 @@ get:
       schema:
         type: string
   responses:
-    '200':
+    "200":
       description: Successful
       content:
         application/json:
           schema:
-            $ref: ..\components\schemas\ResponseGetListExpense.yaml
-    '500':
+            $ref: ../components/schemas/ResponseGetListExpense.yaml
+    "500":
       description: Internal Server Error
       content:
         application/json:
           schema:
-            $ref: ..\components\schemas\internalServerError.yaml
+            $ref: ../components/schemas/internalServerError.yaml

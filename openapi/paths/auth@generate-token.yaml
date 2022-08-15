@@ -8,17 +8,17 @@ post:
     content:
       application/json:
         schema:
-          $ref: ..\components\schemas\generateToken.yaml
+          $ref: ../components/schemas/generateToken.yaml
   responses:
-    '200':
+    "200":
       description: Successful
       content:
         application/json:
           schema:
-            $ref: ..\components\schemas\responseGenerateToken.yaml
-    '500':
+            $ref: ../components/schemas/responseGenerateToken.yaml
+    "500":
       description: Internal Server Error
       content:
         application/json:
           schema:
-            $ref: ..\components\schemas\internalServerError.yaml
+            $ref: ../components/schemas/internalServerError.yaml

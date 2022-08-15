@@ -1,0 +1,3096 @@
+openapi: 3.0.2
+info:
+  title: Shipment API
+  description: .
+  version: 1.0.0
+  x-logo:
+    url: https://drive.google.com/uc?id=1zc-0H_qbdQNdxPZNkQQaV1Px8HDKlHww
+    backgroundColor: '#FFFFFF'
+    altText: Jubelio Logo
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+servers:
+  - url: https://shipment-api.jubelio.com
+tags:
+  - name: Voucher
+    description: >
+      This includes endpoints to generate vouchers, validate vouchers, redeem
+      vouchers, get a list of all vouchers, and get voucher details.
+  - name: Courier
+    description: |
+      Endpoints to get all the courier that are available in Jubelio Shipment.
+  - name: Region
+    description: >
+      Endpoints to get the detail location (provinces, areas, cities, districts)
+      of the consignee.
+paths:
+  /region/:
+    get:
+      tags:
+        - Region
+      summary: Get Region by Zipcode
+      description: Get region information by zip code
+      operationId: GetRegionbyZipcode
+      parameters:
+        - $ref: '#/components/parameters/authorization'
+        - name: zipcode
+          in: query
+          required: true
+          schema:
+            type: string
+            description: Zip code to find the location.
+            example: 12920
+        - name: area_id
+          in: query
+          required: false
+          schema:
+            type: string
+            description: Area ID to find the more specific location.
+            example: 12920483275
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetRegionbyZipcode'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalServerError'
+  /region/provinces:
+    get:
+      tags:
+        - Region
+      summary: Get a/_list of provinces
+      description: Get a list of provinces information
+      operationId: GetProvinces
+      parameters:
+        - $ref: '#/components/parameters/authorization'
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getProvinces'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalServerError'
+  /region/area/{district_id}:
+    get:
+      tags:
+        - Region
+      summary: Get a list of areas
+      description: Get a list of areas information
+      operationId: GetArea
+      parameters:
+        - $ref: '#/components/parameters/authorization'
+        - name: district_id
+          in: path
+          description: District ID
+          required: true
+          schema:
+            type: string
+            example: 110507
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getArea'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalServerError'
+  /region/cities/{province_id}:
+    get:
+      tags:
+        - Region
+      summary: Get a list of cities
+      description: Get a list of cities information
+      operationId: GetCities
+      parameters:
+        - $ref: '#/components/parameters/authorization'
+        - name: province_id
+          in: path
+          description: Province ID
+          required: true
+          schema:
+            type: string
+            example: 11
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getCities'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalServerError'
+  /region/districts/{city_id}:
+    get:
+      tags:
+        - Region
+      summary: Get a list of districs
+      description: Get a list of districts information
+      operationId: GetDistricts
+      parameters:
+        - $ref: '#/components/parameters/authorization'
+        - name: city_id
+          in: path
+          description: City ID
+          required: true
+          schema:
+            type: string
+            example: 1105
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getDistricts'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalServerError'
+  /connect:
+    post:
+      tags:
+        - Connect
+      summary: Connect store to Jubelio Shipment.
+      description: >-
+        Connect store in Jubelio Omnichannel to Jubelio Shipment. You should
+        have account in Jubelio Omnichannel to connect with Jubelio Shipment
+      operationId: ConnectShipment
+      parameters:
+        - $ref: '#/components/parameters/request_id'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/connectShipment'
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseConnectShipment'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalServerError'
+  /auth/generate-token:
+    post:
+      tags:
+        - Connect
+      summary: Generate Access Token
+      description: Generate access token using client id and client secret.
+      operationId: GetToken
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/generateToken'
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseGenerateToken'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalServerError'
+  /shipments:
+    get:
+      tags:
+        - Shipments
+      summary: Get a list of generated AWB
+      description: >-
+        Get information about the list of shipments that are already in progress
+        or completed. <br> <br> List of tracking statuses you can search = <br>
+        1. ALL <br> 2. WAITING <br> 3. PROCESSED <br> 4. CONFIRMED_BY_COURIER
+        <br> 5. ON_THE_WAY_PICK_UP <br> 6. PICKED_UP <br> 7. ON_DELIVERY <br> 8.
+        ON_HOLD <br> 9. DONE <br> 10. DELIVERED <br> 11. RETURNED <br> 12.
+        CANCELED <br> 13. DECLINED <br> 14. SHIPMENT_ISSUE <br>
+      operationId: ListGeneratedAWB
+      parameters:
+        - $ref: '#/components/parameters/authorization'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pagesize'
+        - $ref: '#/components/parameters/courierservice'
+        - $ref: '#/components/parameters/couriermethod'
+        - $ref: '#/components/parameters/sortdirection'
+        - name: sort_by
+          in: query
+          required: false
+          style: form
+          explode: true
+          description: |
+            sort by all column:
+              - ref_no
+              - awb_code
+              - courier_name
+              - courier_service_name
+              - shipment_status
+              - shipment_date
+          schema:
+            type: string
+        - name: q
+          in: query
+          required: false
+          style: form
+          explode: true
+          description: Filter Query by Reference Number (ref_no)
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListGeneratedAWB'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalServerError'
+  /shipments/counter:
+    get:
+      tags:
+        - Shipments
+      summary: Counter AWB
+      description: Count the shipment numbers that are already created.
+      operationId: CounterAWB
+      parameters:
+        - $ref: '#/components/parameters/authorization'
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CounterAWB'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalServerError'
+  /courier-services/list:
+    get:
+      tags:
+        - Courier
+      summary: Get a list of courier services.
+      operationId: getListCourierService
+      parameters:
+        - $ref: '#/components/parameters/servicecategoryid'
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getListCourierService'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalServerError'
+  /services/courier:
+    get:
+      tags:
+        - Courier
+      summary: Get a list of couriers by service category
+      operationId: getListCourierbyServiceCategory
+      parameters:
+        - $ref: '#/components/parameters/servicecategoryid'
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getListCourierbyServiceCategory'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalServerError'
+  /services/categories:
+    get:
+      tags:
+        - Courier
+      summary: Get a list of courier service categories
+      operationId: getCourierServiceCategory
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getCourierServiceCategory'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalServerError'
+  /voucher/list:
+    get:
+      tags:
+        - Voucher
+      summary: Get a list of all vouchers
+      description: Get a list of vouchers that are already created.
+      operationId: getListAllVouchers
+      parameters:
+        - $ref: '#/components/parameters/authorization'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pagesize'
+        - $ref: '#/components/parameters/sortdirection'
+        - $ref: '#/components/parameters/periodstartdate'
+        - $ref: '#/components/parameters/periodenddate'
+        - $ref: '#/components/parameters/qtyvoucherstart'
+        - $ref: '#/components/parameters/qtyvoucherend'
+        - name: sort_by
+          in: query
+          required: false
+          style: form
+          explode: true
+          description: |
+            sort by all column:
+              - voucher period
+              - voucher_type
+              - voucher_name
+              - voucher_qty
+          schema:
+            type: string
+        - name: q
+          in: query
+          required: false
+          style: form
+          explode: true
+          description: Filter Query by Voucher Name
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseGetListAllVouchers'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalServerError'
+  /voucher/counter:
+    get:
+      tags:
+        - Voucher
+      summary: Voucher Summary Counter
+      operationId: VoucherSummaryCounter
+      parameters:
+        - $ref: '#/components/parameters/authorization'
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseVoucherSummaryCounter'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalServerError'
+  /voucher/create:
+    post:
+      tags:
+        - Voucher
+      summary: Create/Save Vouchers
+      description: >-
+        Save the previously created voucher. You have to create the voucher
+        first using Generate Vouchers endpoint.
+      operationId: SaveVoucher
+      parameters:
+        - $ref: '#/components/parameters/authorization'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SaveVoucher'
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseSaveVoucher'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalServerError'
+  /voucher/generate:
+    post:
+      tags:
+        - Voucher
+      summary: Generate Voucher
+      description: Generate the vouchers.
+      operationId: GenerateVoucher
+      parameters:
+        - $ref: '#/components/parameters/authorization'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GenerateVoucher'
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseGenerateVoucher'
+        '404':
+          description: Generate Voucher Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerateVoucherError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalServerError'
+  /invoices/list:
+    get:
+      tags:
+        - Invoice
+      summary: Get List of Invoices
+      description: Get a list of invoices with all payment statuses (Paid, Unpaid, Void).
+      operationId: ListInvoices
+      parameters:
+        - $ref: '#/components/parameters/authorization'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pagesize'
+        - $ref: '#/components/parameters/sortdirection'
+        - $ref: '#/components/parameters/invoice_status'
+        - $ref: '#/components/parameters/invoiceamountstart'
+        - $ref: '#/components/parameters/invoiceamountend'
+        - $ref: '#/components/parameters/invoicestartdate'
+        - $ref: '#/components/parameters/invoiceenddate'
+        - name: q
+          in: query
+          required: false
+          style: form
+          explode: true
+          description: Filter Query by invoice_no
+          schema:
+            type: string
+        - name: sort_by
+          in: query
+          required: false
+          style: form
+          explode: true
+          description: |
+            sort by all column:
+              - invoice_no
+              - created_date
+              - grand_total
+              - voucher_qty
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseListInvoice'
+        '404':
+          description: Redeem Voucher Error Input Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalServerError'
+  /invoices/{invoice_id}:
+    get:
+      tags:
+        - Invoice
+      summary: Get Invoice Details
+      operationId: DetailInvoice
+      parameters:
+        - $ref: '#/components/parameters/authorization'
+        - name: invoice_id
+          in: path
+          required: true
+          description: Invoice ID
+          schema:
+            type: string
+            example: 2
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseDetailInvoice'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalServerError'
+  /shipments/log/{shipment_id}:
+    get:
+      tags:
+        - Shipments
+      summary: Get Shipment Log
+      description: Get the tracking details for specific shipment using shipment_id
+      operationId: ShipmentLog
+      parameters:
+        - $ref: '#/components/parameters/authorization'
+        - $ref: '#/components/parameters/shipmentid'
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShipmentLog'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalServerError'
+  /shipments/create:
+    get:
+      tags:
+        - Shipments
+      summary: Generate AWB
+      description: Generate Airway Bill.
+      operationId: GenerateAWB
+      parameters:
+        - $ref: '#/components/parameters/authorization'
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseGenerateAWB'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalServerError'
+  /shipments/cancel:
+    post:
+      tags:
+        - Shipments
+      summary: Cancel AWB
+      description: >-
+        Cancel Airway Bill. Only if the courier has not picked up the package,
+        can you cancel the airway bill. Please note, not all couriers allow
+        cancellation of the airway bill.
+      operationId: CancelAWB
+      parameters:
+        - $ref: '#/components/parameters/authorization'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CancelAWB'
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseCancelAWB'
+        '404':
+          description: Redeem Voucher Error Input Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalServerError'
+  /shipments/{shipment_id}:
+    get:
+      tags:
+        - Shipments
+      summary: Get AWB Details
+      description: >-
+        Get information about the shipper, consignee, courier based on specific
+        airway bill.
+      operationId: getDetailAWB
+      parameters:
+        - $ref: '#/components/parameters/authorization'
+        - $ref: '#/components/parameters/shipmentid'
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getDetailAWB'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalServerError'
+  /expense/counter:
+    get:
+      tags:
+        - Expense
+      summary: Expense Summary Counter
+      description: >-
+        The counter will calculate the total cost of the shipment, any potential
+        cashback, and the total amount that the seller must pay in the current
+        month.
+      operationId: ExpenseCounter
+      parameters:
+        - $ref: '#/components/parameters/authorization'
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseExpenseSummaryCounter'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalServerError'
+  /invoice/dispute/invoice-reason:
+    get:
+      tags:
+        - Invoice
+      summary: Get Dispute Invoice Reason
+      operationId: DisputeInvoiceReason
+      parameters:
+        - $ref: '#/components/parameters/authorization'
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responsegetDisputeInvoiceReason'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalServerError'
+  /invoice/dispute/invoice-detail-reason:
+    get:
+      tags:
+        - Invoice
+      summary: Get Dispute Invoice Detail Reason
+      operationId: DisputeInvoiceDetailReason
+      parameters:
+        - $ref: '#/components/parameters/authorization'
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responsegetDisputeInvoiceDetailReason'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalServerError'
+  /voucher/redeem:
+    post:
+      tags:
+        - Voucher
+      summary: Redeem Voucher
+      description: >-
+        One transaction number can use more than one voucher code. If there is
+        one invalid voucher code, the redemption process will fail. <br> Invalid
+        vouchers will happen if = <br> - The voucher code is not exist (Due to
+        wrong input/format). <br> - The voucher code is expired. <br> - The
+        voucher cannot be used at this time. <br> - The voucher code has already
+        been used. <br>
+      operationId: RedeemVoucher
+      parameters:
+        - $ref: '#/components/parameters/authorization'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RedeemVoucher'
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseRedeemVoucher'
+        '404':
+          description: Redeem Voucher Error Input Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/404responseRedeemVoucher'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalServerError'
+  /invoice/reports/:
+    get:
+      tags:
+        - Invoice
+      summary: Download Invoice
+      operationId: DownloadInvoice
+      parameters:
+        - $ref: '#/components/parameters/authorization'
+        - name: ids%5B0%5D
+          in: query
+          required: true
+          description: Invoice ID that needs to download
+          schema:
+            type: array
+            items:
+              type: string
+              example:
+                - 20
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DownloadInvoice'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalServerError'
+  /rates:
+    post:
+      tags:
+        - Rates
+      summary: Get Rates for Logistics
+      operationId: GetRates
+      parameters:
+        - $ref: '#/components/parameters/authorization'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/getRates'
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseGetRates'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalServerError'
+  /invoice/dispute:
+    post:
+      tags:
+        - Invoice
+      summary: Dispute Invoice
+      description: >-
+        If the seller does not agree with the price stated on the invoice, the
+        seller can submit a dispute for the invoice.
+      operationId: DisputeInvoice
+      parameters:
+        - $ref: '#/components/parameters/authorization'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DisputeInvoice'
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseDisputeInvoice'
+        '400':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/404responseDisputeInvoice'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalServerError'
+  /voucher/validate:
+    post:
+      tags:
+        - Voucher
+      summary: Validate Voucher
+      description: >-
+        The process of validating a voucher occurs immediately before the
+        redemption process. <br> A voucher is not valid if = <br> - The voucher
+        code is not exist (Due to wrong input/format). <br> - The voucher code
+        is expired. <br> - The voucher cannot be used at this time. <br> - The
+        voucher code has already been used. <br>
+      operationId: ValidateVoucher
+      parameters:
+        - $ref: '#/components/parameters/authorization'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ValidateVoucher'
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseValidateVoucher'
+        '400':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/404responseValidateVoucher'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalServerError'
+  /voucher/{voucher_id}:
+    get:
+      tags:
+        - Voucher
+      summary: Get Voucher Details
+      operationId: getDetailVoucher
+      parameters:
+        - $ref: '#/components/parameters/authorization'
+        - $ref: '#/components/parameters/voucher_id'
+        - $ref: '#/components/parameters/is_used_voucher'
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getDetailVoucher'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalServerError'
+  /voucher/cancel-remaining:
+    delete:
+      tags:
+        - Voucher
+      summary: Cancel Remaining Vouchers
+      description: >-
+        This endpoint is used to burn the remaining voucher at the end of the
+        month.
+      operationId: CancelRemainingVoucher
+      parameters:
+        - $ref: '#/components/parameters/authorization'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CancelRemainingVoucher'
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseCancelRemainingVoucher'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalServerError'
+  /cashback/balance:
+    get:
+      tags:
+        - Cashback
+      summary: Cashback Balance Counter
+      description: >-
+        A cashback balance is the same as a voucher balance. You can only create
+        vouchers if you have voucher balance in your account.
+      operationId: CashbackBalanceCounter
+      parameters:
+        - $ref: '#/components/parameters/authorization'
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseCashbackBalanceCounter'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalServerError'
+  /cashback/history:
+    get:
+      tags:
+        - Cashback
+      summary: Get Cashback History
+      description: >-
+        You can use this endpoint to get information about the use of the
+        voucher balance.
+      operationId: getCashbackHistory
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pagesize'
+        - $ref: '#/components/parameters/cashbackstartdate'
+        - $ref: '#/components/parameters/cashbackenddate'
+        - $ref: '#/components/parameters/sortdirection'
+        - name: sort_by
+          in: query
+          required: false
+          style: form
+          explode: true
+          description: |
+            Sort by all column:
+            - ref_no
+            - cashback_type
+            - cashback_date
+            - cashback_amount
+          schema:
+            type: string
+        - name: q
+          in: query
+          required: false
+          style: form
+          explode: true
+          description: Filter query by ref_no
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseCashbackHistory'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalServerError'
+  /expense/list:
+    get:
+      tags:
+        - Expense
+      summary: Get List Expense
+      description: Get the cost of each shipment that occurred during the current month.
+      operationId: GetListExpense
+      parameters:
+        - $ref: '#/components/parameters/authorization'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pagesize'
+        - $ref: '#/components/parameters/shipmentstartdate'
+        - $ref: '#/components/parameters/shipmentenddate'
+        - $ref: '#/components/parameters/sortdirection'
+        - $ref: '#/components/parameters/couriermethod'
+        - $ref: '#/components/parameters/courierservice'
+        - name: sort_by
+          in: query
+          required: false
+          style: form
+          explode: true
+          description: >
+            Sort by all column: ref_no, shipment_date, awb_code,
+            courier_service_name, courier_service_category, shipment_cost,
+            shipping_subsidy, courier, cost_diff
+          schema:
+            type: string
+        - name: q
+          in: query
+          required: false
+          style: form
+          explode: true
+          description: Filter query by ref_no
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseGetListExpense'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalServerError'
+components:
+  parameters:
+    authorization:
+      name: authorization
+      in: header
+      required: true
+      style: simple
+      explode: false
+      description: Authentication Token
+      example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJTU0NjY3NDk2MH0.KVt...
+      schema:
+        type: string
+    request_id:
+      name: request_id
+      in: header
+      required: true
+      style: simple
+      explode: false
+      description: Request ID
+      example: eyJhbGciOiJIUzI1N
+      schema:
+        type: string
+    page:
+      name: page
+      in: query
+      required: true
+      style: form
+      explode: true
+      description: Page
+      schema:
+        minimum: 1
+        type: number
+        format: int32
+    pagesize:
+      name: page_size
+      in: query
+      required: true
+      style: form
+      explode: true
+      description: Page Size.
+      schema:
+        minimum: 1
+        type: number
+        format: int32
+    courierservice:
+      name: courier_service[]
+      in: query
+      required: false
+      style: form
+      description: >-
+        Courier Service Category. Use endpoint 'Get List Courier by Service
+        Category' to get the value
+      schema:
+        type: array
+        items:
+          type: string
+    couriermethod:
+      name: method[]
+      in: query
+      required: false
+      style: form
+      description: >-
+        Courier Service Category. Use endpoint 'Get Courier Service Category' to
+        get the value
+      schema:
+        type: array
+        items:
+          type: string
+    sortdirection:
+      name: sort_direction
+      in: query
+      required: false
+      style: form
+      explode: true
+      description: Ascending or descending
+      schema:
+        type: string
+    servicecategoryid:
+      name: service_category_id
+      in: query
+      required: true
+      style: form
+      explode: true
+      description: Service Category ID
+      schema:
+        type: string
+        example: 5
+    periodstartdate:
+      name: start_date
+      in: query
+      required: false
+      style: form
+      description: Voucher start date. Unix time format
+      schema:
+        type: string
+        example: 1655426869
+    periodenddate:
+      name: end_date
+      in: query
+      required: false
+      style: form
+      description: Voucher end date. Unix time format
+      schema:
+        type: string
+        example: 1655426869
+    qtyvoucherstart:
+      name: qty_voucher_start
+      in: query
+      required: false
+      style: form
+      description: Minimum voucher quantity
+      schema:
+        type: number
+        example: 10
+    qtyvoucherend:
+      name: qty_voucher_end
+      in: query
+      required: false
+      style: form
+      description: Maximum voucher quantity
+      schema:
+        type: number
+        example: 100
+    invoice_status:
+      name: invoice_status
+      in: query
+      required: false
+      style: form
+      description: |
+        Invoice status are:
+          - 0 = Unreconcile
+          - 1 = Unpaid
+          - 2 = Paid
+          - 3 = Void
+          - 4 = Dispute
+      schema:
+        type: string
+        example: 2
+    invoiceamountstart:
+      name: invoice_amount_start
+      in: query
+      required: false
+      style: form
+      description: Invoice amount, minimum value
+      schema:
+        type: number
+        example: 100000
+    invoiceamountend:
+      name: invoice_amount_end
+      in: query
+      required: false
+      style: form
+      description: Invoice amount, maximum value
+      schema:
+        type: number
+        example: 200000
+    invoicestartdate:
+      name: start_date
+      in: query
+      required: false
+      style: form
+      description: Invoice created, start date. Unix time format
+      schema:
+        type: string
+        example: 16554268
+    invoiceenddate:
+      name: end_date
+      in: query
+      required: false
+      style: form
+      description: Invoice created, end date. Unix time format
+      schema:
+        type: string
+        example: 16554268
+    shipmentid:
+      name: shipment_id
+      in: path
+      required: true
+      description: Shipment ID
+      example: 1
+      schema:
+        type: string
+    voucher_id:
+      name: voucher_id
+      in: path
+      required: true
+      description: Voucher ID
+      schema:
+        type: string
+        example: 1
+    is_used_voucher:
+      name: is_used
+      in: query
+      required: true
+      description: Whether or not the voucher is already used
+      schema:
+        type: boolean
+        example: true
+    cashbackstartdate:
+      name: start_date
+      in: query
+      required: false
+      style: form
+      description: Cashback start date. Unix time format
+      schema:
+        type: string
+        example: 1655426869
+    cashbackenddate:
+      name: end_date
+      in: query
+      required: false
+      style: form
+      description: Cashback end date. Unix time format
+      schema:
+        type: string
+        example: 1655426869
+    shipmentstartdate:
+      name: start_date
+      in: query
+      required: false
+      style: form
+      description: Shipment start date. Unix time format
+      schema:
+        type: string
+        example: 1655426869
+    shipmentenddate:
+      name: end_date
+      in: query
+      required: false
+      style: form
+      description: Shipment end date. Unix time format
+      schema:
+        type: string
+        example: 1655426869
+  schemas:
+    GetRegionbyZipcode:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              province:
+                type: string
+                description: Province Name
+                example: Jawa Tengah
+              province_id:
+                type: string
+                description: Province ID
+                example: 33
+              city:
+                type: string
+                description: City Name
+                example: KAB. PURWOREJO
+              city_id:
+                type: string
+                description: City ID
+                example: 3306
+              district_id:
+                type: string
+                description: District ID
+                example: 330610
+              district:
+                type: string
+                description: District Name
+                example: Butuh
+              area:
+                type: string
+                description: Area Name
+                example: Kedungmulyo
+              area_id:
+                type: string
+                description: Area ID
+                example: 3306102001
+    internalServerError:
+      type: object
+      properties:
+        statusCode:
+          type: string
+          description: Error Status Code
+          example: 500
+        error:
+          type: string
+          description: Error Type
+          example: Internal Server Error
+        message:
+          type: string
+          description: Error Message
+          example: An internal server error
+    getProvinces:
+      type: object
+      properties:
+        province_id:
+          type: string
+          description: Province ID
+          example: 36
+        name:
+          type: string
+          description: Province Name
+          example: BANTEN
+    getArea:
+      type: object
+      properties:
+        area_id:
+          type: string
+          description: Area ID
+          example: 1105072002
+        district_id:
+          type: string
+          description: District ID
+          example: 110507
+        name:
+          type: string
+          description: Area Name
+          example: Alue Batee
+    getCities:
+      type: object
+      properties:
+        city_id:
+          type: string
+          description: City ID
+          example: 1105
+        province_id:
+          type: string
+          description: Province ID
+          example: 11
+        name:
+          type: string
+          description: City Name
+          example: KAB. ACEH BARAT DAYA
+    getDistricts:
+      type: object
+      properties:
+        district_id:
+          type: string
+          description: District ID
+          example: 110507
+        city_id:
+          type: string
+          description: City ID
+          example: 1105
+        name:
+          type: string
+          description: District Name
+          example: Arongan Lambalek
+    connectShipment:
+      type: object
+      properties:
+        company_id:
+          type: string
+          description: Company ID
+          example: 20
+        company_name:
+          type: string
+          description: Company Name / Store Name
+          example: Toko Ajung
+        npwp:
+          type: string
+          description: NPWP
+          example: 10242402039405
+        website:
+          type: string
+          description: Website
+          example: ''
+        address:
+          type: string
+          description: Store Address
+          example: Jl. Wahyu Raya no 889
+        city:
+          type: string
+          description: City
+          example: Jakarta Selatan
+        state:
+          type: string
+          description: State
+          example: DKI Jakarta
+        postcode:
+          type: string
+          description: Postcode
+          example: 12420
+        country:
+          type: string
+          description: Country
+          example: Indonesia
+        coordinate:
+          type: string
+          description: Coordinate
+          example: (-6.212911,106.82146)
+        contact_person:
+          type: string
+          description: Contact Person
+          example: Krystal Jung
+        phone1:
+          type: string
+          description: Store Phone Number
+          example: 877777777
+        phone2:
+          type: string
+          description: Store Phone Number
+          example: 8888888888
+        email:
+          type: string
+          description: Email
+          example: krystaljung@yopmail.com
+        fax:
+          type: string
+          description: Fax
+          example: ''
+        referral:
+          type: string
+          description: Referral. The default value is Jubelio.
+          example: Jubelio
+        locations:
+          type: array
+          description: Array of Objects. List of warehouse locations.
+          items:
+            type: object
+            properties:
+              location_code:
+                type: string
+                description: Warehouse Location Code
+                example: 1
+              location_name:
+                type: string
+                description: Warehouse Location Name
+                example: Gudang Pusat
+              address:
+                type: string
+                description: Warehouse Address
+                example: Jl. Wahyu Raya No. 893829
+              city:
+                type: string
+                description: City
+                example: Jakarta Selatan
+              phone:
+                type: string
+                description: phone
+                example: 819222222222
+              email:
+                type: string
+                description: Warehouse Email
+                example: testing@gmail.com
+              province:
+                type: string
+                description: Province
+                example: DKI Jakarta
+              zipcode:
+                type: string
+                description: Zipcode
+                example: 12420
+              area:
+                type: string
+                description: Area
+                example: Cilandak
+              subdistrict:
+                type: string
+                description: Subdistrict
+                example: Gandaria Selatan
+              coordinate:
+                type: string
+                description: Coordinate
+                example: Coordinate
+              province_id:
+                type: string
+                description: Province ID
+                example: 123
+              city_id:
+                type: string
+                description: City ID
+                example: 12
+              district_id:
+                type: string
+                description: District ID
+                example: 1233
+              subdistrict_id:
+                type: string
+                description: District ID
+                example: 12324
+    responseConnectShipment:
+      type: object
+      properties:
+        client_id:
+          type: string
+          description: Client ID
+          example: 321432143dsafdsa
+        client_secret:
+          type: string
+          description: Client Secret
+          example: 23vjdsivnjsiv
+    generateToken:
+      type: object
+      properties:
+        client_id:
+          type: string
+          description: Client ID
+          example: 321432143dsafdsa
+        client_secret:
+          type: string
+          description: Client Secret
+          example: 23vjdsivnjsiv
+    responseGenerateToken:
+      type: object
+      properties:
+        token:
+          type: string
+          description: Access Token
+          example: 321432143dsafdsa
+        expires_in:
+          type: string
+          description: Expired time for the token in seconds.
+          example: 86400
+    ListGeneratedAWB:
+      type: object
+      properties:
+        page:
+          type: number
+          description: Refer page
+          example: 1
+        page_size:
+          type: number
+          description: Total row per page
+          example: 10
+        total_page:
+          type: number
+          description: Total Page
+          example: 20
+        total_data:
+          type: number
+          description: Total Data
+          example: 200
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              shipment_id:
+                type: string
+                description: Shipment ID
+                example: 1
+              ref_no:
+                type: string
+                description: Reference number, refers to order/transaction number.
+                example: SP-djsaof8392
+              shipment_date:
+                type: string
+                description: Shipment Date
+                example: 8 Januari 2022, 15:34:00
+              awb_code:
+                type: string
+                description: Airway Bill Code
+                example: CM32847302455
+              shipment_status:
+                type: string
+                description: >-
+                  Shipment Status. You can search for these shipping statuses
+                  below = a. ALL b. WAITING C. PROCESSED d. CONFIRMED_BY_COURIER
+                  e. ON_THE_WAY_PICK_UP f. PICKED_UP g. ON_DELIVERY h. ON_HOLD
+                  i. DONE j. DELIVERED k. RETURNED l. CANCELED m. DECLINED n.
+                  SHIPMENT_ISSUE
+                example: DECLINED
+              courier_name:
+                type: string
+                description: Courier Name
+                example: JNE
+              courier_logo:
+                type: string
+                description: Courier Logo
+                example: https://cdn.branch.io/branch-assets/1605683460275-og_image.png
+              courier_id:
+                type: string
+                description: Courier ID
+                example: 11
+              courier_service_name:
+                type: string
+                description: Courier Service Name
+                example: JNE Reguler
+              courier_service_id:
+                type: string
+                description: Courier Service ID
+                example: 1111
+              courier_service_category:
+                type: string
+                description: Courier Service Category
+                example: REGULER
+    CounterAWB:
+      type: object
+      properties:
+        waiting:
+          type: number
+          description: Counter for shipments that are on waiting status.
+          example: 30
+        processed:
+          type: number
+          description: Counter for shipments that are on processed status.
+          example: 32
+    getListCourierService:
+      type: array
+      items:
+        type: object
+        properties:
+          courier_service_id:
+            type: string
+            description: Courier Service ID
+            example: 12
+          courier_id:
+            type: string
+            description: Courier ID
+            example: 17
+          name:
+            type: string
+            description: Courier Service Name
+            example: Paxel Instant
+          code:
+            type: string
+            description: Courier service category code from the logistics
+            example: INSTANT
+          service_category_id:
+            type: string
+            description: Service Category ID
+            example: 1
+          logo:
+            type: string
+            description: Courier Logo
+            example: https://cdn.branch.io/branch-assets/1605683460275-og_image.png
+    getListCourierbyServiceCategory:
+      type: array
+      items:
+        type: object
+        properties:
+          courier_service_id:
+            type: string
+            description: Courier Service ID
+            example: 12
+          courier_id:
+            type: string
+            description: Courier ID
+            example: 17
+          name:
+            type: string
+            description: Courier Service Name
+            example: Paxel Instant
+          code:
+            type: string
+            description: Courier service category code from the logistics
+            example: INSTANT
+          logo:
+            type: string
+            description: Courier Logo
+            example: https://cdn.branch.io/branch-assets/1605683460275-og_image.png
+    getCourierServiceCategory:
+      type: object
+      properties:
+        service_category_id:
+          type: string
+          description: Service Category ID
+          example: 1
+        name:
+          type: string
+          description: Service Category Name
+          example: REGULER
+    responseGetListAllVouchers:
+      type: object
+      properties:
+        page:
+          type: number
+          description: Page
+          example: 1
+        page_size:
+          type: number
+          description: Page Size
+          example: 10
+        total_page:
+          type: number
+          description: Total Page
+          example: 20
+        total_data:
+          type: number
+          description: Total Data
+          example: 200
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              voucher_id:
+                type: string
+                description: Voucher ID
+                example: 1
+              voucher_period:
+                type: string
+                description: Voucher Period
+                example: 1 Januari 2022 - 31 Januari 2022
+              voucher_type:
+                type: string
+                description: >-
+                  Voucher type. For now, there is only one type of voucher which
+                  is 'Voucher Pembelian'.
+                example: Voucher Pembelian
+              voucher_name:
+                type: string
+                description: Voucher Name
+                example: JUNI CERIA 2022
+              voucher_qty:
+                type: number
+                description: Remaining quantity voucher available
+                example: 50
+    responseVoucherSummaryCounter:
+      type: object
+      properties:
+        period:
+          type: string
+          description: Voucher Summary Period
+          example: Juni 2022
+        data:
+          type: object
+          properties:
+            total:
+              type: number
+              description: >-
+                Voucher balance for seller to generate the vouchers. The amount
+                is 7% of the shipping cost.
+              example: 100000
+            remaining_balance:
+              type: number
+              description: Balance to generate the vouchers.
+              example: 50000
+            voucher_total_amount:
+              type: number
+              description: The amount of vouchers that have already been generated.
+              example: 50000
+            remaining_voucher:
+              type: number
+              description: >-
+                The remaining quantity/_of a voucher that is still redeemable
+                for customers.
+              example: 5
+            current_shipment:
+              type: number
+              description: Number of shipments that have been done.
+              example: 40
+            shipment_required:
+              type: number
+              description: >-
+                Number of shipments that must be achieved to get the cashback
+                (100 regular shipments).
+              example: 100
+    SaveVoucher:
+      type: object
+      required:
+        - voucher_name
+        - voucher_prefix
+        - start_period
+        - end_period
+        - amount
+        - total_voucher
+        - digit
+      properties:
+        voucher_id:
+          type: string
+          description: Voucher ID
+          example: 12
+        voucher_name:
+          type: string
+          description: Voucher Name
+          example: IBOKX PROMO JUNI
+        start_period:
+          type: string
+          format: date-time
+          description: Voucher period, Start date.
+          example: '2020-03-04T00:00:00.000Z'
+        end_period:
+          type: string
+          format: date-time
+          description: Voucher period, End date.
+          example: '2020-03-04T00:00:00.000Z'
+        amount:
+          type: number
+          description: Price per Voucher/Voucher Value.
+          example: 40000
+        total_voucher:
+          type: number
+          description: Total Quantity Voucher
+          example: 5
+        total_amount:
+          type: number
+          description: The total amount spent to create the vouchers
+          example: 200000
+        cashback_left:
+          type: number
+          description: The remaining voucher balance
+          example: 150000
+        digit:
+          type: number
+          description: >-
+            The voucher digit running number. The voucher digit running number
+            will be included in the voucher code. For example, if the digit is
+            3, then the running number will be 001.
+          example: 3
+        vouchers:
+          type: array
+          items:
+            type: string
+            description: Generated Vouchers
+            example:
+              - JUBELIOxIBOKX001
+              - JUBELIOxIBOKX002
+              - JUBELIOxIBOKX003
+    responseSaveVoucher:
+      type: object
+      properties:
+        voucher_id:
+          type: string
+          description: Voucher ID
+          example: 12
+        voucher_name:
+          type: string
+          description: Voucher Name
+          example: IBOKX PROMO JUNI
+        start_period:
+          type: string
+          format: date-time
+          description: Voucher Period, Start Date
+          example: '2020-03-04T00:00:00.000Z'
+        end_period:
+          type: string
+          format: date-time
+          description: Voucher period, End date
+          example: '2020-03-04T00:00:00.000Z'
+        amount:
+          type: number
+          description: Voucher Amount
+          example: 5000
+        total_voucher:
+          type: number
+          description: Total Voucher
+          example: 3
+        total_amount:
+          type: number
+          description: Total Amount
+          example: 15000
+        cashback_left:
+          type: number
+          description: Cashback Left
+          example: 4760000
+        vouchers:
+          type: array
+          description: Vouchers successfully generated.
+          example:
+            - JUBELIOIBOKX401001
+            - JUBELIOIBOKX401002
+    GenerateVoucher:
+      type: object
+      required:
+        - voucher_prefix
+        - total_voucher
+        - digit
+      properties:
+        voucher_prefix:
+          type: string
+          description: Voucher prefix. Voucher prefix will be included on the voucher code
+          example: JUNICERIA
+        total_voucher:
+          type: number
+          description: Voucher Quantity
+          example: 3
+        digit:
+          type: number
+          description: >-
+            The voucher digit running number. The voucher digit running number
+            will be included in the voucher code. If the digit is 3, then the
+            running number will be 001.
+          example: 3
+    responseGenerateVoucher:
+      type: object
+      properties:
+        vouchers:
+          type: array
+          items:
+            type: string
+            example:
+              - JUBELIOJUNICERIA401001
+              - JUBELIOJUNICERIA401002
+    GenerateVoucherError:
+      type: object
+      properties:
+        statusCode:
+          type: string
+          description: Error code
+          example: 404
+        error:
+          type: string
+          description: Error type
+          example: Generate Voucher Error
+        message:
+          type: string
+          description: >-
+            Error message. There are 3 types of messages= 'mandatory field is
+            missing', 'voucher amount is exceeded the cashback', 'voucher code
+            is already used'.
+          example: Mandatory field is missing
+    responseListInvoice:
+      type: object
+      properties:
+        page:
+          type: number
+          description: Page
+          example: 1
+        page_size:
+          type: number
+          description: Page Size
+          example: 10
+        total_page:
+          type: number
+          description: Total Page
+          example: 20
+        total_data:
+          type: number
+          description: Total Data
+          example: 200
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              invoice_no:
+                type: string
+                description: Invoice Number
+                example: INVJAN2022
+              invoice_id:
+                type: string
+                description: Invoice ID
+                example: 12
+              created_date:
+                type: string
+                description: Invoice created date
+                example: 1 Februari 2022
+              total_expense:
+                type: string
+                description: Total expense
+                example: Invoice amount
+              invoice_status:
+                type: string
+                description: |
+                  Invoice Status
+                  - 0 - Unreconcile
+                  - 1 - Unpaid
+                  - 2 - Void
+                  - 3 - Paid
+                  - 4 - Dispute
+                example: 2
+    responseDetailInvoice:
+      type: object
+      properties:
+        invoice_no:
+          type: string
+          description: Invoice Number
+          example: INVJAN2022
+        invoice_date:
+          type: string
+          description: Invoice created date
+          example: 1 februari 2022
+        invoice_status:
+          type: string
+          description: Invoice Status
+          example: |
+            Invoice status, consist of:
+              - 0 - Unreconcile
+              - 1 - Unpaid
+              - 2 - Paid
+              - 3 - Void
+              - 4 - Dispute
+        total_shipment_cost:
+          type: number
+          description: Total Shipment Cost. Total amount from 'Biaya' column.
+          example: 1000000
+        total_subsidies:
+          type: number
+          description: Total Subsidies. Total amount from 'Subsidi' column
+          example: 200000
+        list_awb:
+          type: array
+          items:
+            type: object
+            properties:
+              invoice_detail_id:
+                type: string
+                description: Invoice Detail ID
+                example: 2
+              awb_code:
+                type: string
+                description: Airway Bill Code
+                example: CM328947328
+              ref_no:
+                type: string
+                description: Reference Number. Refers to order number/transaction number.
+                example: SP-3284793274
+              courier_service_category:
+                type: string
+                description: Courier Service Category
+                example: REGULER
+              courier_service_name:
+                type: string
+                description: Courier Service Name
+                example: JNE REGULER
+              shipment_date:
+                type: string
+                format: date-time
+                description: Shipment Date
+                example: '2020-03-04T00:00:00.000Z'
+              shipment_price:
+                type: number
+                description: >-
+                  Initial bill. Should be the same with the shipment_price_bill,
+                  but can be different if there is dispute for the AWB.
+                example: 20000
+              shipment_subsidy:
+                type: number
+                description: Shipment subsidy. 15% of the shipment_price
+                example: 3000
+              shipment_price_bill:
+                type: number
+                description: Shipping fee from the logistics
+                example: 20000
+              total_shipment_price_bill:
+                type: number
+                description: shipment_price_bill deducted with the shipment_subisidy
+                example: 17000
+              cost_diff:
+                type: number
+                description: >-
+                  Balance. For normal condition, amount should be 0
+                  (shipment_price - shipment_price_bill)
+                example: 0
+    ShipmentLog:
+      type: object
+      properties:
+        shipment_log_id:
+          type: number
+          description: Shipment Log ID
+          example: 2
+        shipment_id:
+          type: number
+          description: Shipment ID
+          example: 4
+        date:
+          type: string
+          format: date-time
+          description: Date based on shipment status
+          example: '2022-06-21T08:00:00.000Z'
+        status:
+          type: string
+          description: Shipment Status
+          example: Dikonfirmasi
+        status_detail:
+          type: string
+          description: Status Detail
+          example: Paket Telah Dikonfirmasi Kurir
+        extra_info:
+          type: string
+          description: Note/Information from logistics
+          example: null
+    responseGenerateAWB:
+      type: object
+      properties:
+        courier_id:
+          type: string
+          description: Courier ID
+          example: 17
+        courier_service_id:
+          type: string
+          description: Courier Service ID
+          example: 1728
+        payment_method:
+          type: string
+          description: Payment Method
+          example: null
+        is_insurance:
+          type: boolean
+          description: Whether or not package is include the insurance.
+          example: false
+        origin:
+          type: object
+          properties:
+            name:
+              type: string
+              description: Shipper Name
+              example: Lalisa Manoban
+            phone:
+              type: string
+              description: Shipper Phone Number
+              example: 81273821947
+            email:
+              type: string
+              description: Shipper Email
+              example: indra@blackpink.com
+            address:
+              type: string
+              description: Shipper Address
+              example: Jl. Wahyu Raya No. 888
+            province_id:
+              type: string
+              description: Province ID
+              example: 32
+            city_id:
+              type: string
+              description: City ID
+              example: 3275
+            district_id:
+              type: string
+              description: District ID
+              example: 327509
+            country:
+              type: string
+              description: Shipper Country
+              example: Indonesia
+            area_id:
+              type: string
+              description: Area ID
+              example: 12
+            zipcode:
+              type: string
+              description: Shipper Zipcode
+              example: 17425
+            coordinate:
+              type: string
+              description: Shipper Coordinate Location
+              example: (-6.310273,106.8848316)
+            note:
+              type: string
+              description: Note
+              example: ''
+        destination:
+          type: object
+          properties:
+            name:
+              type: string
+              description: Consignee Name
+              example: Lalisa Manoban
+            phone:
+              type: string
+              description: Consignee Phone Number
+              example: 81273821947
+            email:
+              type: string
+              description: Consignee Email
+              example: indra@blackpink.com
+            address:
+              type: string
+              description: Consignee Address
+              example: Jl. Wahyu Raya No. 888
+            province_id:
+              type: string
+              description: Province ID
+              example: 32
+            city_id:
+              type: string
+              description: City ID
+              example: 3275
+            district_id:
+              type: string
+              description: District ID
+              example: 327509
+            country:
+              type: string
+              description: Consignee Country
+              example: Indonesia
+            area_id:
+              type: string
+              description: Area ID
+              example: 12
+            zipcode:
+              type: string
+              description: Consignee Zipcode
+              example: 17425
+            coordinate:
+              type: string
+              description: Consignee Coordinate Location
+              example: (-6.310273,106.8848316)
+            note:
+              type: string
+              description: Note
+              example: ''
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              item_name:
+                type: string
+                description: Item Name
+                example: Buku
+              category:
+                type: string
+                description: Item Category
+                example: Buku
+              quantity:
+                type: number
+                description: Item Quantity
+                example: 1
+              value:
+                type: number
+                description: Item Value
+                example: 10000
+              weight:
+                type: number
+                description: Weight in gram
+                example: 1000
+              length:
+                type: number
+                description: Package Length
+                example: 10
+              height:
+                type: number
+                description: Package Height
+                example: 10
+              width:
+                type: number
+                description: Package width
+                example: 10
+              depth:
+                type: number
+                description: Package depth
+                example: 10
+              is_fragile:
+                type: boolean
+                description: Whether or not the item is fragile.
+                example: false
+    CancelAWB:
+      type: object
+      required:
+        - cancel_reason
+        - awb_code
+      properties:
+        cancel_reason:
+          type: string
+          description: Cancel Reason. Obtain the value from **Get List Reason Cancel AWB**.
+          example: Barang Belum Siap
+        awb_code:
+          type: string
+          description: Airway Bill Code
+          example: CM8439257346
+    responseCancelAWB:
+      type: object
+      properties:
+        status:
+          type: string
+          description: status cancel
+          example: Cancel Successful
+        awb_code:
+          type: string
+          description: Airway Bill Code
+          example: CM439258340
+        courier_name:
+          type: string
+          description: Courier Name
+          example: Anteraja
+        ref_no:
+          type: string
+          description: >-
+            Reference Number. This refers to transaction number or order number
+            associated with the airway bill.
+          example: SP-74386953478
+    getDetailAWB:
+      type: object
+      properties:
+        shipment_id:
+          type: number
+          description: Shipment ID
+          example: 1
+        ref_no:
+          type: string
+          description: Reference number, refers to a transaction number/order number.
+          example: SP-djsaof8392
+        eta:
+          type: string
+          description: Estimated Arrival Time (ETA) for the package
+          example: 1-2 Februari
+        courier_service_name:
+          type: string
+          description: Courier Service Name
+          example: JNE Reguler
+        courier_logo:
+          type: string
+          description: Courier Logo
+          example: https://cdn.branch.io/branch-assets/1605683460275-og_image.png
+        tracking_link:
+          type: string
+          description: Tracking link
+          example: https://shipment.jubelio.com/tracking/reguler/54365347657
+        origin:
+          type: object
+          properties:
+            name:
+              type: string
+              description: Shipper Name
+              example: Lalisa Manoban
+            phone:
+              type: string
+              description: Shipper Phone Number
+              example: 81273821947
+            address:
+              type: string
+              description: Shipper Address
+              example: Jl. Wahyu Raya No. 888
+            province:
+              type: string
+              description: Province
+              example: DKI Jakarta
+            city:
+              type: string
+              description: City
+              example: Kota Adm Jakarta Selatan
+            district:
+              type: string
+              description: District (Kecamatan)
+              example: Cilandak
+            country:
+              type: string
+              description: Shipper Country
+              example: Indonesia
+            subdistrict:
+              type: string
+              description: Subdistrict (Kelurahan)
+              example: Gandaria Selatan
+            zipcode:
+              type: string
+              description: Shipper Zipcode
+              example: 17425
+            coordinate:
+              type: string
+              description: Shipper Coordinate Location
+              example: (-6.310273,106.8848316)
+        destination:
+          type: object
+          properties:
+            name:
+              type: string
+              description: Consignee Name
+              example: Lalisa Manoban
+            phone:
+              type: string
+              description: Consignee Phone Number
+              example: 81273821947
+            address:
+              type: string
+              description: Consignee Address
+              example: Jl. Wahyu Raya No. 888
+            province:
+              type: string
+              description: Province
+              example: DKI Jakarta
+            city:
+              type: string
+              description: City
+              example: Kota Adm Jakarta Selatan
+            district:
+              type: string
+              description: District (Kecamatan)
+              example: Cilandak
+            country:
+              type: string
+              description: Country
+              example: Indonesia
+            subdistrict:
+              type: string
+              description: Subdistrict (Kelurahan)
+              example: Gandaria Selatan
+            zipcode:
+              type: string
+              description: Consignee Zipcode
+              example: 17425
+            coordinate:
+              type: string
+              description: Consignee Coordinate Location
+              example: (-6.310273,106.8848316)
+    responseExpenseSummaryCounter:
+      type: object
+      properties:
+        period:
+          type: string
+          description: Voucher Summary Period
+          example: Juni 2022
+        data:
+          type: object
+          properties:
+            expense:
+              type: number
+              description: Total shipment costs for the current month.
+              example: 8000000
+            cashback:
+              type: number
+              description: >-
+                The potential cashback. The amount is 15% of total shipment
+                cost.
+              example: 1200000
+            total:
+              type: number
+              description: Expense minus cashback
+              example: 6800000
+    responsegetDisputeInvoiceReason:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+            description: The same with dispute invoice reason.
+            example: Kesalahan biaya
+          text:
+            type: string
+            description: Dispute Invoice Reason
+            example: Kesalahan biaya
+    responsegetDisputeInvoiceDetailReason:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+            description: ID
+            example: Salah Hitung Berat
+          text:
+            type: string
+            description: Dispute Invoice Detail Reason
+            example: Salah Hitung Berat
+    RedeemVoucher:
+      type: object
+      required:
+        - ref_no
+        - voucher_code
+      properties:
+        ref_no:
+          type: string
+          description: Order number, which is using the voucher code.
+          example: SP-3728497329
+        voucher_code:
+          type: array
+          items:
+            type: string
+            description: >-
+              Voucher code that needs to be redeemed. One order/transaction
+              number can be used more than once.
+            example:
+              - JUBELIOJUNICERIA401001
+    responseRedeemVoucher:
+      type: array
+      items:
+        type: object
+        properties:
+          voucher_usage_id:
+            type: string
+            description: Voucher Usage ID
+            example: 1
+          ref_no:
+            type: string
+            description: Order number, which is using the voucher code
+            example: SP-3728497329
+          voucher_code:
+            type: string
+            description: >-
+              Voucher code that needs to be redeemed. One order/transaction
+              number can be used more than once.
+            example: JUBELIOJUNICERIA401001
+          redeem_date:
+            type: string
+            format: date-time
+            description: Redeem Date
+            example: '2020-03-04T00:00:00.000Z'
+    404responseRedeemVoucher:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code
+          example: ERR_INPUT
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              voucher_code:
+                type: string
+                description: Voucher Code
+                example: JUBELIOJUNCERIA401001
+              message:
+                type: string
+                description: Error message
+                example: Voucher sudah digunakan
+              is_valid:
+                type: boolean
+                description: Whether or not the voucher is valid
+                example: false
+        message:
+          type: string
+          description: Redeem Voucher Summary Message
+          example: Vouchers are not eligible
+    DownloadInvoice:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Download Status
+          example: OK
+        url:
+          type: string
+          description: URL to download invoice
+          example: https://report-shipment.jubelio.com/?token=48327583492758943
+        invoice_name:
+          type: string
+          description: Invoice Name
+          example: INVJAN2021
+        timezone:
+          type: string
+          description: Download location
+          example: Asia/Jakarta
+        timezone_offset:
+          type: string
+          description: Timezone Offset
+          example: 7
+        downloaded_time:
+          type: string
+          description: Downloaded Time
+          example: '2020-03-04T00:00:00.000Z'
+        file_type:
+          type: string
+          format: binary
+          description: File type
+          example: INVJAN2022.pdf
+    getRates:
+      type: object
+      properties:
+        origin:
+          type: object
+          properties:
+            area_id:
+              type: string
+              description: Area ID
+              example: 31740238279
+            zipcode:
+              type: string
+              description: Shipper Zipcode Location
+              example: 12920
+            coordinate:
+              type: string
+              description: Shipper Coordinate Location
+              example: (-6.2121761,106.8182448)
+        destination:
+          type: object
+          properties:
+            area_id:
+              type: string
+              description: Area ID
+              example: 31740238279
+            zipcode:
+              type: string
+              description: Consignee Zipcode Location
+              example: 12920
+            coordinate:
+              type: string
+              description: Consignee Coordinate Location
+              example: (-6.2121761,106.8182448)
+        weight:
+          type: number
+          description: Package Weight in gram
+          example: 1000
+        service_category_id:
+          type: string
+          description: Service Category ID
+          example: 1
+    responseGetRates:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              courier_name:
+                type: string
+                description: Courier Name
+                example: JNE
+              courier_id:
+                type: string
+                description: Courier ID
+                example: 11
+              courier_service_name:
+                type: string
+                description: Courier Service Name
+                example: JNE Reguler
+              courier_service_category:
+                type: string
+                description: Courier Service Category
+                example: REGULAR
+              rates:
+                type: number
+                description: Rates
+                example: 9000
+    DisputeInvoice:
+      type: object
+      required:
+        - invoice_id
+        - invoice_dispute_reason
+        - dispute_shipments
+      properties:
+        invoice_id:
+          type: string
+          description: Invoice ID
+          example: 1
+        invoice_dispute_reason:
+          type: string
+          description: >-
+            Invoice Dispute Reason. Obtain the value from **Get Dispute Invoice
+            Reason** endpoint.
+          example: Kesalahan biaya
+        dispute_shipments:
+          type: array
+          items:
+            type: object
+            required:
+              - invoice_detail_id
+              - invoice_dispute_shipment_reason
+              - correct_amount
+            properties:
+              invoice_detail_id:
+                type: string
+                description: >-
+                  Invoice Detail ID. Obtain the value from **Get Detail
+                  Invoice** endpoint.
+                example: 1
+              invoice_dispute_shipment_reason:
+                type: string
+                description: >-
+                  Invoice Dispute Shipment Reason. Obtain the value from **Get
+                  Dispute Invoice Detail Reason** endpoint.
+                example: Salah Harga
+              correct_amount:
+                type: number
+                description: Correct shipping price
+                example: 15000
+    responseDisputeInvoice:
+      type: object
+      properties:
+        dispute_invoice_id:
+          type: string
+          description: Dispute Invoice ID
+          example: 24
+    404responseDisputeInvoice:
+      type: object
+      properties:
+        statusCode:
+          type: string
+          description: Error Status Code
+          example: 404
+        error:
+          type: string
+          description: Dispute Invoice Failed
+          example: Internal Server Error
+        message:
+          type: string
+          description: Error Message
+          example: Mandatory Field is missing
+    ValidateVoucher:
+      type: object
+      required:
+        - voucher_code
+      properties:
+        voucher_code:
+          type: array
+          items:
+            type: string
+            description: Voucher code that needs to be validated
+            example: JUBELIOJUNICERIA401001, JUBELIOJUNICERIA401002
+    responseValidateVoucher:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              voucher_code_id:
+                type: string
+                description: Voucher Code ID
+                example: 1
+              voucher_id:
+                type: string
+                description: Voucher ID
+                example: 1
+              voucher_code:
+                type: string
+                description: >-
+                  Voucher code. Voucher code format is
+                  **JubelioxUserInputxCompanyIDxRunningNumber**
+                example: JUBELIOJUNICERIA401001
+              is_used:
+                type: boolean
+                description: Whether the voucher is already used or not.
+                example: null
+              voucher_name:
+                type: string
+                description: Voucher Name
+                example: DELL PROMO JUNI
+              voucher_type:
+                type: string
+                description: Voucher Type. 1= Transaction Voucher, 2= Free Shipping Voucher
+                example: 1
+              voucher_prefix:
+                type: string
+                description: Voucher Prefix. Part of voucher code.
+                example: JUNICERIA
+              start_period:
+                type: string
+                format: date-time
+                description: Voucher Period, Start date
+                example: '2022-06-25T00:00:00.000Z'
+              end_period:
+                type: string
+                format: date-time
+                description: Voucher Period, End date
+                example: '2022-06-25T00:00:00.000Z'
+              total_voucher:
+                type: number
+                description: Total Quantity Voucher
+                example: 3
+              amount:
+                type: number
+                description: Voucher amount
+                example: 5000
+              message:
+                type: string
+                description: >-
+                  Validation message. If the voucher code is valid, the message
+                  will appear as **'Voucher dapat digunakan'**. But if the
+                  voucher code is invalid, the message will appear as 'voucher
+                  tidak ditemukan' **(not found)**, 'voucher sudah kadaluarsa'
+                  **(expired)**, 'voucher belum bisa digunakan' **(cannot use
+                  before the period start)**, 'voucher sudah digunakan' **(is
+                  already used)**.
+                example: Voucher dapat digunakan
+              is_valid:
+                type: boolean
+                description: >-
+                  Voucher validation. If it's true, voucher is valid and can be
+                  applied by the customer
+                example: true
+    404responseValidateVoucher:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error Code
+          example: ERR_INPUT
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              voucher_code:
+                type: string
+                description: >-
+                  Voucher code. Voucher code format is
+                  **JubelioxUserInputxCompanyIDxRunningNumber**
+                example: JUBELIOJUNICERIA401001
+              message:
+                type: string
+                description: >-
+                  Validation message. If the voucher code is invalid, the
+                  message will appear as 'voucher tidak ditemukan' **(not
+                  found)**, 'voucher sudah kadaluarsa' **(expired)**, 'voucher
+                  belum bisa digunakan' **(cannot use before the period
+                  start)**, 'voucher sudah digunakan' **(is already used)**.
+                example: Voucher tidak ditemukan
+              is_valid:
+                type: boolean
+                description: >-
+                  Voucher validation. If it is false, the voucher is invalid and
+                  the customer cannot use it.
+                example: false
+        message:
+          type: string
+          description: Voucher validation summary message
+          example: Vouchers are not eligible
+    getDetailVoucher:
+      type: object
+      properties:
+        voucher_name:
+          type: string
+          description: Voucher Name
+          example: VOUCHER JUNI CERIA 2022
+        voucher_period_start:
+          type: string
+          description: Voucher Period, Start Date
+          example: 1 Januari 2022
+        voucher_period_end:
+          type: string
+          description: Voucher Period, End Date
+          example: 30 Januari 2022
+        voucher_amount:
+          type: number
+          description: Price per Voucher/Voucher Value
+          example: 100000
+        voucher_qty:
+          type: number
+          description: Voucher Quantity
+          example: 10
+        voucher_code:
+          type: string
+          description: >-
+            Voucher code/Voucher prefix. A voucher prefix will be included when
+            generating the voucher.
+          example: JUNICERIA
+        vouchers:
+          type: array
+          items:
+            type: object
+            description: List of generated vouchers with their status.
+            properties:
+              voucher:
+                type: string
+                description: Generated Voucher Code.
+                example: JUBELIOJUNICERIA401001
+              ref_no:
+                type: string
+                description: >-
+                  Reference Number. This refers to a transaction or order number
+                  associated with the voucher.
+                example: SP-432543254
+              is_used:
+                type: boolean
+                description: Whether the voucher has already been used or not.
+                example: true
+    CancelRemainingVoucher:
+      type: object
+      required:
+        - ids
+      properties:
+        ids:
+          type: array
+          items:
+            type: string
+            description: Voucher ID
+            example: 1,2,3
+    ResponseCancelRemainingVoucher:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Cancel Status
+          example: Voucher Successfully Canceled
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              voucher_id:
+                type: string
+                description: Voucher ID
+                example: 14
+              voucher_name:
+                type: string
+                description: Voucher Name
+                example: Voucher JUNI CERIA 2022
+              remaining_amount:
+                type: number
+                description: Voucher Remaining Amount
+                example: 10000
+    ResponseCashbackBalanceCounter:
+      type: object
+      properties:
+        period:
+          type: string
+          description: Cashback Period
+          example: 2022, June
+        cashback_balance:
+          type: number
+          description: Voucher balance to create vouchers
+          example: 50000
+    ResponseCashbackHistory:
+      type: object
+      properties:
+        page:
+          type: number
+          description: Page
+          example: 1
+        page_size:
+          type: number
+          description: Page Size
+          example: 10
+        total_page:
+          type: number
+          description: Total Page
+          example: 20
+        total_data:
+          type: number
+          description: Total Data
+          example: 200
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              cashback_id:
+                type: string
+                description: Cashback ID
+                example: 12
+              ref_no:
+                type: string
+                description: >-
+                  Transaction number, if the cashback type is **Voucher** then
+                  the transaction number will be the voucher name. If the
+                  cashback type is **Pengiriman** then the transaction number
+                  will be the airway bill number.
+                example: >-
+                  Voucher Juni 2022 (Voucher Name)/ CM8372489372 (Airway Bill
+                  Number)
+              cashback_date:
+                type: string
+                format: date-time
+                description: >-
+                  If the cashback type is **Voucher** then it will be the date
+                  when the balance is used to generate the voucher. If the
+                  cashback type is **Pengiriman** then it will be the request
+                  pickup time.
+                example: '2022-06-21T08:00:00.000Z'
+              cashback_type:
+                type: string
+                description: >-
+                  Cashback type. There are 2 types of cashback, 1 = 
+                  **'Pengiriman'** and 2 = **'Voucher'**
+                example: 2
+              cashback_amount:
+                type: number
+                description: The amount will be minus, if the cashback type is voucher.
+                example: -100000
+    ResponseGetListExpense:
+      type: object
+      properties:
+        page:
+          type: number
+          description: Page
+          example: 1
+        page_size:
+          type: number
+          description: Page Size
+          example: 10
+        total_page:
+          type: number
+          description: Total Page
+          example: 20
+        total_data:
+          type: number
+          description: Total Data
+          example: 200
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              ref_no:
+                type: string
+                description: >-
+                  Reference Number, usually refers to order number/transaction
+                  number.
+                example: SP-4325432543
+              shipment_date:
+                type: string
+                format: date-time
+                description: Request pickup time.
+                example: '2020-03-04T00:00:00.000Z'
+              awb_code:
+                type: string
+                description: Airway Bill Code
+                example: CM8347435758
+              courier_service_category:
+                type: string
+                description: Courier Service Category. For example = Reguler, Instant, etc.
+                example: Reguler
+              courier_service_name:
+                type: string
+                description: Courier Service Name
+                example: JNE Reguler
+              courier_logo:
+                type: string
+                description: Courier Logo
+                example: https://cdn.branch.io/branch-assets/1605683460275-og_image.png
+              shipment_price:
+                type: number
+                description: >-
+                  Initial bill. Should be the same with the shipment_price_bill,
+                  but can be different if there is dispute for the AWB.
+                example: 20000
+              shipment_subsidy:
+                type: number
+                description: Shipment subsidy. 15% of the shipment_price
+                example: 3000
+              shipment_price_bill:
+                type: number
+                description: Shipping fee from the logistics
+                example: 20000
+              total_shipment_price_bill:
+                type: number
+                description: shipment_price_bill deducted with the shipment_subisidy
+                example: 17000
+              cost_diff:
+                type: number
+                description: >-
+                  Balance. shipment_price should have the same amount as
+                  shipment_price_bill so there is no difference (0).
+                example: 0

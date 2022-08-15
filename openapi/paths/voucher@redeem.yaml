@@ -10,28 +10,28 @@ post:
     be used at this time. <br> - The voucher code has already been used. <br>
   operationId: RedeemVoucher
   parameters:
-    - $ref: ..\components\parameters\authorization.yaml
+    - $ref: ../components/parameters/authorization.yaml
   requestBody:
     content:
       application/json:
         schema:
-          $ref: ..\components\schemas\RedeemVoucher.yaml
+          $ref: ../components/schemas/RedeemVoucher.yaml
   responses:
-    '200':
+    "200":
       description: Successful
       content:
         application/json:
           schema:
-            $ref: ..\components\schemas\responseRedeemVoucher.yaml
-    '404':
+            $ref: ../components/schemas/responseRedeemVoucher.yaml
+    "404":
       description: Redeem Voucher Error Input Response
       content:
         application/json:
           schema:
-            $ref: ..\components\schemas\404responseRedeemVoucher.yaml
-    '500':
+            $ref: ../components/schemas/404responseRedeemVoucher.yaml
+    "500":
       description: Internal Server Error
       content:
         application/json:
           schema:
-            $ref: ..\components\schemas\internalServerError.yaml
+            $ref: ../components/schemas/internalServerError.yaml

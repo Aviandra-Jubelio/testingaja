@@ -4,7 +4,7 @@ get:
   summary: Download Invoice
   operationId: DownloadInvoice
   parameters:
-    - $ref: ..\components\parameters\authorization.yaml
+    - $ref: ../components/parameters/authorization.yaml
     - name: ids%5B0%5D
       in: query
       required: true
@@ -16,15 +16,15 @@ get:
           example:
             - 20
   responses:
-    '200':
+    "200":
       description: Successful
       content:
         application/json:
           schema:
-            $ref: ..\components\schemas\DownloadInvoice.yaml
-    '500':
+            $ref: ../components/schemas/DownloadInvoice.yaml
+    "500":
       description: Internal Server Error
       content:
         application/json:
           schema:
-            $ref: ..\components\schemas\internalServerError.yaml
+            $ref: ../components/schemas/internalServerError.yaml
