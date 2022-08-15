@@ -5,7 +5,7 @@ get:
   description: Get a list of areas information
   operationId: GetArea
   parameters:
-    - $ref: ../components/parameters/authorization.yaml
+    - $ref: ..\components\parameters\authorization.yaml
     - name: district_id
       in: path
       description: District ID
@@ -14,15 +14,15 @@ get:
         type: string
         example: 110507
   responses:
-    "200":
+    '200':
       description: Successful
       content:
         application/json:
           schema:
-            $ref: ../components/schemas/getArea.yaml
-    "500":
+            $ref: ..\components\schemas\getArea.yaml
+    '500':
       description: Internal Server Error
       content:
         application/json:
           schema:
-            $ref: ../components/schemas/internalServerError.yaml
+            $ref: ..\components\schemas\internalServerError.yaml

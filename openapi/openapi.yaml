@@ -20,6 +20,10 @@ tags:
   - name: Courier
     description: |
       Endpoints to get all the courier that are available in Jubelio Shipment.
+  - name: Region
+    description: >
+      Endpoints to get the detail location (provinces, areas, cities, districts)
+      of the consignee.
 paths:
   /region/:
     $ref: paths/region@.yaml

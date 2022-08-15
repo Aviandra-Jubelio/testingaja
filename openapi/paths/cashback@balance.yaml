@@ -7,17 +7,17 @@ get:
     vouchers if you have voucher balance in your account.
   operationId: CashbackBalanceCounter
   parameters:
-    - $ref: ../components/parameters/authorization.yaml
+    - $ref: ..\components\parameters\authorization.yaml
   responses:
-    "200":
+    '200':
       description: Successful
       content:
         application/json:
           schema:
-            $ref: ../components/schemas/ResponseCashbackBalanceCounter.yaml
-    "500":
+            $ref: ..\components\schemas\ResponseCashbackBalanceCounter.yaml
+    '500':
       description: Internal Server Error
       content:
         application/json:
           schema:
-            $ref: ../components/schemas/internalServerError.yaml
+            $ref: ..\components\schemas\internalServerError.yaml

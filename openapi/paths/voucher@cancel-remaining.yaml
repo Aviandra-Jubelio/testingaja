@@ -5,22 +5,22 @@ delete:
   description: This endpoint is used to burn the remaining voucher at the end of the month.
   operationId: CancelRemainingVoucher
   parameters:
-    - $ref: ../components/parameters/authorization.yaml
+    - $ref: ..\components\parameters\authorization.yaml
   requestBody:
     content:
       application/json:
         schema:
-          $ref: ../components/schemas/CancelRemainingVoucher.yaml
+          $ref: ..\components\schemas\CancelRemainingVoucher.yaml
   responses:
-    "200":
+    '200':
       description: Successful
       content:
         application/json:
           schema:
-            $ref: ../components/schemas/ResponseCancelRemainingVoucher.yaml
-    "500":
+            $ref: ..\components\schemas\ResponseCancelRemainingVoucher.yaml
+    '500':
       description: Internal Server Error
       content:
         application/json:
           schema:
-            $ref: ../components/schemas/internalServerError.yaml
+            $ref: ..\components\schemas\internalServerError.yaml

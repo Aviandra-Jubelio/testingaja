@@ -5,28 +5,28 @@ post:
   description: Generate the vouchers.
   operationId: GenerateVoucher
   parameters:
-    - $ref: ../components/parameters/authorization.yaml
+    - $ref: ..\components\parameters\authorization.yaml
   requestBody:
     content:
       application/json:
         schema:
-          $ref: ../components/schemas/GenerateVoucher.yaml
+          $ref: ..\components\schemas\GenerateVoucher.yaml
   responses:
-    "200":
+    '200':
       description: Successful
       content:
         application/json:
           schema:
-            $ref: ../components/schemas/responseGenerateVoucher.yaml
-    "404":
+            $ref: ..\components\schemas\responseGenerateVoucher.yaml
+    '404':
       description: Generate Voucher Error
       content:
         application/json:
           schema:
-            $ref: ../components/schemas/GenerateVoucherError.yaml
-    "500":
+            $ref: ..\components\schemas\GenerateVoucherError.yaml
+    '500':
       description: Internal Server Error
       content:
         application/json:
           schema:
-            $ref: ../components/schemas/internalServerError.yaml
+            $ref: ..\components\schemas\internalServerError.yaml

@@ -23,7 +23,7 @@ properties:
         example: 50000
       remaining_voucher:
         type: number
-        description: "The remaining quantity/_of a voucher that is still redeemable for customers."
+        description: "The remaining quantity\_of a voucher that is still redeemable for customers."
         example: 5
       current_shipment:
         type: number

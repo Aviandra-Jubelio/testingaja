@@ -4,19 +4,19 @@ get:
   summary: Get a list of generated AWB
   description: >-
     Get information about the list of shipments that are already in progress or
-    completed. <br> List of tracking statuses you can search= <br> 1. ALL <br>
-    2. WAITING <br> 3. PROCESSED <br> 4. CONFIRMED_BY_COURIER <br> 5.
+    completed. <br> <br> List of tracking statuses you can search = <br> 1. ALL
+    <br> 2. WAITING <br> 3. PROCESSED <br> 4. CONFIRMED_BY_COURIER <br> 5.
     ON_THE_WAY_PICK_UP <br> 6. PICKED_UP <br> 7. ON_DELIVERY <br> 8. ON_HOLD
     <br> 9. DONE <br> 10. DELIVERED <br> 11. RETURNED <br> 12. CANCELED <br> 13.
     DECLINED <br> 14. SHIPMENT_ISSUE <br>
   operationId: ListGeneratedAWB
   parameters:
-    - $ref: ../components/parameters/authorization.yaml
-    - $ref: ../components/parameters/page.yaml
-    - $ref: ../components/parameters/pagesize.yaml
-    - $ref: ../components/parameters/courierservice.yaml
-    - $ref: ../components/parameters/couriermethod.yaml
-    - $ref: ../components/parameters/sortdirection.yaml
+    - $ref: ..\components\parameters\authorization.yaml
+    - $ref: ..\components\parameters\page.yaml
+    - $ref: ..\components\parameters\pagesize.yaml
+    - $ref: ..\components\parameters\courierservice.yaml
+    - $ref: ..\components\parameters\couriermethod.yaml
+    - $ref: ..\components\parameters\sortdirection.yaml
     - name: sort_by
       in: query
       required: false
@@ -41,15 +41,15 @@ get:
       schema:
         type: string
   responses:
-    "200":
+    '200':
       description: Successful
       content:
         application/json:
           schema:
-            $ref: ../components/schemas/ListGeneratedAWB.yaml
-    "500":
+            $ref: ..\components\schemas\ListGeneratedAWB.yaml
+    '500':
       description: Internal Server Error
       content:
         application/json:
           schema:
-            $ref: ../components/schemas/internalServerError.yaml
+            $ref: ..\components\schemas\internalServerError.yaml

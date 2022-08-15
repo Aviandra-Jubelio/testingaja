@@ -19,6 +19,9 @@ tags:
   - name: Courier
     description: |
       Endpoints to get all the courier that are available in Jubelio Shipment.
+  - name: Region
+    description: |
+      Endpoints to get the detail location (provinces, areas, cities, districts) of the consignee.
 
 paths:
   /region/:
@@ -226,7 +229,7 @@ paths:
       description:
         Get information about the list of shipments that are already in progress or completed.
         <br>
-        List of tracking statuses you can search= <br>
+        <br> List of tracking statuses you can search = <br>
         1. ALL <br>
         2. WAITING <br>
         3. PROCESSED <br>
@@ -747,11 +750,11 @@ paths:
       description:
         One transaction number can use more than one voucher code. If there is one invalid voucher code, the redemption process will fail.
         <br>
-        Invalid vouchers will happen if =
-        - The voucher code is not exist (Due to wrong input/format).
-        - The voucher code is expired.
-        - The voucher cannot be used at this time.
-        - The voucher code has already been used.
+        Invalid vouchers will happen if = <br>
+        - The voucher code is not exist (Due to wrong input/format). <br>
+        - The voucher code is expired. <br>
+        - The voucher cannot be used at this time. <br>
+        - The voucher code has already been used. <br>
       operationId: RedeemVoucher
       parameters:
         - $ref: "#/components/parameters/authorization"
@@ -876,11 +879,11 @@ paths:
       description:
         The process of validating a voucher occurs immediately before the redemption process.
         <br>
-        A voucher is not valid if =
-        - The voucher code is not exist (Due to wrong input/format).
-        - The voucher code is expired.
-        - The voucher cannot be used at this time.
-        - The voucher code has already been used.
+        A voucher is not valid if = <br>
+        - The voucher code is not exist (Due to wrong input/format). <br>
+        - The voucher code is expired. <br>
+        - The voucher cannot be used at this time. <br>
+        - The voucher code has already been used. <br>
       operationId: ValidateVoucher
       parameters:
         - $ref: "#/components/parameters/authorization"
